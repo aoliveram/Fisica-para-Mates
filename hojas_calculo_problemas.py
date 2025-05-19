@@ -89,3 +89,48 @@ plt.grid(True)
 plt.savefig('Latex/plot_hoja_calculo_2_2.png')
 #plt.show()
 
+# ------------------------ Problema 3 ------------------------------------
+
+# Datos del problema 3
+T_data = np.array([0.44, 1.61, 3.88, 7.89]) # Periodo T (años)
+r_data = np.array([0.088, 0.208, 0.374, 0.600]) # Radio r (Gm)
+
+# --- Gráfico 1: Datos originales ---
+plt.figure(figsize=(8, 6))
+plt.plot(r_data, T_data, marker='o', linestyle='-', color='b')
+plt.xlabel('Radio r (Gm)')
+plt.ylabel('Periodo T (años)')
+plt.title('Órbitas de Satélites: Datos Originales')
+plt.grid(True)
+plt.savefig('Latex/plot_hoja_calculo_3_1.png')
+#plt.show()
+
+# --- Gráfico 2: Datos en escala log-log y regresión ---
+log_r_data = np.log(r_data)
+log_T_data = np.log(T_data)
+
+# Realizar regresión lineal (ln(T) vs ln(r))
+# ln(T) = n * ln(r) + ln(C)
+# n es la pendiente, ln(C) es la ordenada al origen
+slope, intercept, r_value, p_value, std_err = linregress(log_r_data, log_T_data)
+n_estimado = slope
+log_C_estimado = intercept
+C_estimado_sat = np.exp(log_C_estimado)
+
+print(f"\nProblema 3 - Estimaciones:")
+print(f"  Pendiente (n): {n_estimado:.3f}")
+print(f"  Ordenada al origen (ln(C)): {log_C_estimado:.3f}")
+print(f"  C: {C_estimado_sat:.3f}")
+print(f"  Coeficiente de correlación R^2: {r_value**2:.4f}")
+
+
+plt.figure(figsize=(8, 6))
+plt.plot(log_r_data, log_T_data, marker='s', linestyle='-', color='r', label='Datos Log-Log')
+plt.plot(log_r_data, intercept + slope * log_r_data, 'g--', label=f'Ajuste lineal: ln(T) = {slope:.2f}ln(r) + ({intercept:.2f})')
+plt.xlabel('ln(r)')
+plt.ylabel('ln(T)')
+plt.title('Órbitas de Satélites: Escala Log-Log y Ajuste Lineal')
+plt.legend()
+plt.grid(True)
+plt.savefig('Latex/plot_hoja_calculo_3_2.png')
+#plt.show()
