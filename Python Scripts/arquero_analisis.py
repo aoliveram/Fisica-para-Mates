@@ -6,9 +6,8 @@ import matplotlib.pyplot as plt
 
 # --- 1. CONSTANTES Y PARÁMETROS DEL ESCENARIO ---
 g = 9.81
-x1, y1, R1 = 40.0, 23.0, 4.0
-x2, y2, R2 = 65.0, 19.0, 4.0
-
+x_c1, y_c1, R1 = 40.0, 23.0, 4.0
+x_c2, y_c2, R2 = 65.0, 19.0, 6.0
 
 # --- 2. BÚSQUEDA DE SOLUCIONES (Lógica Básica con Bucles For) ---
 # Definimos los rangos de velocidad y ángulo con pasos gruesos.
@@ -48,11 +47,11 @@ for idx_v in range(num_filas):
         # INICIO DEL SISTEMA DE INECUACIONES
         # =========================================================================
 
-        y_x1 = x1 * tan_theta - (g * x1**2) / (2 * velocidad**2 * cos_theta**2)
-        exito_anillo1 = abs(y_x1 - y1) < R1
+        y_x1 = x_c1 * tan_theta - (g * x_c1**2) / (2 * velocidad**2 * cos_theta**2)
+        exito_anillo1 = abs(y_x1 - y_c1) < R1
         
-        y_x2 = x2 * tan_theta - (g * x2**2) / (2 * velocidad**2 * cos_theta**2)
-        exito_anillo2 = abs(y_x2 - y2) < R2
+        y_x2 = x_c2 * tan_theta - (g * x_c2**2) / (2 * velocidad**2 * cos_theta**2)
+        exito_anillo2 = abs(y_x2 - y_c2) < R2
         
         if exito_anillo1 and exito_anillo2:
             # Si es una solución, usamos los índices (idx_v, idx_a) para marcar
@@ -71,11 +70,11 @@ fig, ax = plt.subplots(figsize=(12, 9))
 
 # La visualización con imshow sigue siendo la misma.
 cax = ax.imshow(resultados, origin='lower', aspect='auto',
-                extent=[rango_angulo[0], rango_angulo[-1], rango_velocidad[0], rango_velocidad[-1]],
+                extent=[rango_angulo[40], rango_angulo[-40], rango_velocidad[10], rango_velocidad[-10]],
                 cmap='Greens', vmin=0, vmax=1.5)
 
 # --- Estilo del Gráfico ---
-ax.set_title("Espacio de Soluciones para el Desafío del Arquero", fontsize=16)
+ax.set_title("Espacio de Soluciones", fontsize=16)
 ax.set_xlabel("Ángulo de Lanzamiento (°)", fontsize=12)
 ax.set_ylabel("Velocidad Inicial (m/s)", fontsize=12)
 ax.grid(True, linestyle='--', alpha=0.3, color='gray')
