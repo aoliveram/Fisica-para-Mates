@@ -3,6 +3,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
 
 # --- 1. CONSTANTES Y PARÁMETROS DEL ESCENARIO ---
 g = 9.81
@@ -68,16 +69,28 @@ for idx_v in range(num_filas):
 # --- 3. VISUALIZACIÓN ---
 fig, ax = plt.subplots(figsize=(12, 9))
 
-# La visualización con imshow sigue siendo la misma.
+# La visualización con imshow es la misma
 cax = ax.imshow(resultados, origin='lower', aspect='auto',
-                extent=[rango_angulo[40], rango_angulo[-40], rango_velocidad[10], rango_velocidad[-10]],
+                extent=[rango_angulo[0], rango_angulo[-1], rango_velocidad[0], rango_velocidad[-1]],
                 cmap='Greens', vmin=0, vmax=1.5)
 
 # --- Estilo del Gráfico ---
 ax.set_title("Espacio de Soluciones", fontsize=16)
 ax.set_xlabel("Ángulo de Lanzamiento (°)", fontsize=12)
 ax.set_ylabel("Velocidad Inicial (m/s)", fontsize=12)
-ax.grid(True, linestyle='--', alpha=0.3, color='gray')
+ax.set_xlim((20, 70))
+ax.set_ylim((15, 55))
+
+# Etiquetas de números en los ejes
+ax.xaxis.set_major_locator(MultipleLocator(10))
+ax.yaxis.set_major_locator(MultipleLocator(5))
+
+# Rejilla cada 0.5 unidades
+ax.xaxis.set_minor_locator(MultipleLocator(0.5))
+ax.yaxis.set_minor_locator(MultipleLocator(0.5))
+
+ax.grid(which='major', linestyle='--', linewidth='0.8', color='gray', alpha=0.5)
+ax.grid(which='minor', linestyle=':', linewidth='0.5', color='gray', alpha=0.3)
 
 fig.patch.set_alpha(0.0)
 ax.patch.set_alpha(0.0)
