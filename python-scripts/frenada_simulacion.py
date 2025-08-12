@@ -1,5 +1,4 @@
-# frenada_emergencia_explorador_3_sliders.py
-# Versión adaptada: mantiene la dinámica original pero reemplaza los rectángulos
+# Nueva versión: mantiene la dinámica original pero reemplaza los rectángulos
 # por imágenes (SVG convertidas a PNG en memoria) y posiciona los autos por
 # el frente (A) y la parte trasera (B).
 
@@ -9,8 +8,6 @@ import cairosvg
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from matplotlib.widgets import Slider, Button
-
-solution_unlocked = False  # Variable para controlar acceso a la solución completa
 
 # --- CONSTANTES ---
 CAR_LENGTH = 10.0  # Longitud visual de los autos en metros (usada en coordenadas de datos)
@@ -151,13 +148,7 @@ def simulate_setup(event):
 
 
 def show_full_solution(event):
-    global solution_unlocked
-    if not solution_unlocked:
-        status_text.set_text("Solución bloqueada. Pide al profesor que habilite el acceso.")
-        status_text.set_color('orange')
-        fig.canvas.draw_idle()
-        return
-
+    """Rellena el espacio de parámetros con la solución teórica."""
     a = a_slider.val
     d_range = np.linspace(d_slider.valmin, d_slider.valmax, 150)
     dv_range = np.linspace(dv_slider.valmin, dv_slider.valmax, 150)
@@ -185,11 +176,6 @@ dv_slider = Slider(ax=ax_dv, label='Δ Velocidad (m/s)', valmin=1, valmax=30, va
 
 sim_button = Button(ax_sim_button, 'SIMULAR SETUP', hovercolor='cyan')
 sol_button = Button(ax_sol_button, 'SOLUCIÓN COMPLETA', hovercolor='limegreen')
-sol_button.label.set_color('black')
-sol_button.on_clicked(show_full_solution)
-
-# El profesor puede desbloquear la solución en la consola con:
-# solution_unlocked = True
 
 # Estilo de los sliders y botones
 for w in [a_slider, d_slider, dv_slider]:
@@ -201,9 +187,9 @@ for btn in [sim_button, sol_button]:
 
 # Conexiones
 sim_button.on_clicked(simulate_setup)
+sol_button.on_clicked(show_full_solution)
 
 # Ejecución
 ax_space.set_xlim(d_slider.valmin, d_slider.valmax)
 ax_space.set_ylim(dv_slider.valmin, dv_slider.valmax)
-plt.ion()  # Modo interactivo
-plt.show(block=False)
+plt.show()
