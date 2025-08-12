@@ -5,34 +5,34 @@
 
 import io
 import numpy as np
+import cairosvg
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from matplotlib.widgets import Slider, Button
 
 # --- CONSTANTES ---
-CAR_LENGTH = 5.0  # Longitud visual de los autos en metros (usada en coordenadas de datos)
-CAR_HEIGHT = 5.0  # Alto visual en coordenadas de datos (para el extent vertical)
+CAR_LENGTH = 10.0  # Longitud visual de los autos en metros (usada en coordenadas de datos)
+CAR_HEIGHT = 10.0  # Alto visual en coordenadas de datos (para el extent vertical)
 
 # --- FUNCIONES AUXILIARES ---
 
 def load_svg_as_png_array(path_svg):
-    """Convierte un SVG a PNG en memoria y lo lee como array (RGBA) con matplotlib.
-    Devuelve un ndarray que puede pasarse a ax.imshow(..., extent=...).
+    """Convierte un SVG a PNG en memoria, y así leer con ax.imshow(..., extent=...).
     """
     png_data = cairosvg.svg2png(url=path_svg)
     img = mpimg.imread(io.BytesIO(png_data), format='png')
     return img
 
-# Cargar autos (rutas relativas; cámbialas si es necesario)
+# Cargar autos
 car_A_img = load_svg_as_png_array('Python Scripts/car-side-view-A.svg')
 car_B_img = load_svg_as_png_array('Python Scripts/car-side-view-B.svg')
 
-# --- CONFIGURACIÓN DE LA FIGURA Y EJES (MODO OSCURO) ---
+# --- CONFIGURACIÓN DE LA FIGURA Y EJES ---
 fig, (ax_sim, ax_space) = plt.subplots(2, 1, figsize=(10, 8.5),
                                      gridspec_kw={'height_ratios': [1, 5]})
 plt.subplots_adjust(left=0.1, bottom=0.35, hspace=0.5)
 
-BACKGROUND_COLOR = '#2B2B2B'; PLOT_COLOR = '#3C3C3C'; LIGHT_COLOR = 'white'
+BACKGROUND_COLOR = '#2B2B2B'; PLOT_COLOR = "#706C6C"; LIGHT_COLOR = 'white'
 SAFE_COLOR = 'limegreen'; CRASH_COLOR = 'red'
 
 fig.patch.set_facecolor(BACKGROUND_COLOR)
@@ -48,12 +48,10 @@ for ax in [ax_sim, ax_space]:
 # --- CONFIGURACIÓN DEL GRÁFICO SUPERIOR (SIMULACIÓN 1D) ---
 ax_sim.set_title("Simulación 1D en la Carretera")
 ax_sim.set_yticks([]); ax_sim.set_xlabel("Posición (m)")
-status_text = ax_sim.text(0.5, 0.5, "Presiona 'SIMULAR SETUP'", ha='center', va='center',
+status_text = ax_sim.text(0.5, 0.5, " ", ha='center', va='center',
                           transform=ax_sim.transAxes, fontsize=12, color=LIGHT_COLOR)
 
-# Dibujaremos las imágenes con ax.imshow usando 'extent' para controlar
-# su posición y tamaño en coordenadas de datos. Creamos dos artistas
-# iniciales (con extents provisionales) y los actualizaremos en la animación.
+# Dibujaremos las imágenes dentro de la simulación
 init_left_A = -CAR_LENGTH
 init_right_A = 0
 init_bottom = -CAR_HEIGHT / 2
@@ -62,9 +60,9 @@ car_A_artist = ax_sim.imshow(car_A_img, extent=[init_left_A, init_right_A, init_
 car_B_artist = ax_sim.imshow(car_B_img, extent=[50, 50 + CAR_LENGTH, init_bottom, init_top], zorder=5)
 
 # --- CONFIGURACIÓN DEL GRÁFICO INFERIOR (ESPACIO DE PARÁMETROS) ---
-ax_space.set_title("Explorador del Espacio de Parámetros")
-ax_space.set_xlabel("Distancia Inicial, D (m)")
-ax_space.set_ylabel("Diferencia de Velocidad, Δv (m/s)")
+ax_space.set_title("Espacio de Parámetros")
+ax_space.set_xlabel("D (m)")
+ax_space.set_ylabel("Δv (m/s)")
 ax_space.grid(True, linestyle=':', alpha=0.4)
 markers_safe = {'x': [], 'y': []}; markers_crash = {'x': [], 'y': []}
 safe_plot, = ax_space.plot([], [], 'o', color=SAFE_COLOR, label='Seguro')
@@ -74,19 +72,12 @@ ax_space.legend()
 # --- LÓGICA Y FUNCIONES DE LA INTERFAZ ---
 
 def check_safety(d, dv, a):
-    """Aplica la condición teórica de seguridad: (Δv)² < 2 a D.
-
-    Aquí `d` se interpreta como la **separación inicial** entre el frente del auto A
-    y la parte trasera del auto B (es decir, el hueco libre que debe frenarse).
-    """
+    """Aplica la condición teórica de seguridad: (Δv)² < 2 a D."""
     return dv**2 < 2 * a * d
 
 
 def simulate_setup(event):
-    """Se ejecuta al presionar "SIMULAR SETUP".
-    Mantiene la dinámica original, pero actualiza las imágenes (artists) usando
-    set_extent([...]) para que la posición y tamaño sean correctos en coordenadas de datos.
-    """
+    """Se ejecuta al presionar "SIMULAR SETUP."""
     d = d_slider.val
     dv = dv_slider.val
     a = a_slider.val
@@ -134,14 +125,14 @@ def simulate_setup(event):
     for i in range(num_frames + 1):
         t = i * dt
 
-        # pos_A es la coordenada del frente de A; pos_B es la coordenada de la
-        # parte trasera de B.
+        # pos_A es la coordenada del frente de A 
+        # pos_B es la coordenada de la parte trasera de B.
         pos_A = pos_A_0 + v1 * t - 0.5 * a * t**2
         pos_B = pos_B_0 + v2 * t
 
-        # Detectar colisión (cuando el frente de A alcanza la parte trasera de B)
+        # Detectar colisión
         if (not is_safe) and (pos_A >= pos_B):
-            # A queda justo tocando B (frente de A = parte trasera de B)
+            # Fijamos que A quede justo tocando a B
             pos_A = pos_B
             # Actualizar extents finales y terminar la simulación
             car_A_artist.set_extent([pos_A - CAR_LENGTH, pos_A, init_bottom, init_top])
@@ -149,7 +140,7 @@ def simulate_setup(event):
             fig.canvas.draw_idle()
             break
 
-        # Actualizar posiciones (colocamos la imagen usando extents en coordenadas de datos)
+        # Actualizar posiciones
         car_A_artist.set_extent([pos_A - CAR_LENGTH, pos_A, init_bottom, init_top])
         car_B_artist.set_extent([pos_B, pos_B + CAR_LENGTH, init_bottom, init_top])
 
@@ -179,7 +170,7 @@ ax_dv = plt.axes([0.25, 0.10, 0.65, 0.03])
 ax_sim_button = plt.axes([0.3, 0.025, 0.18, 0.04])
 ax_sol_button = plt.axes([0.52, 0.025, 0.18, 0.04])
 
-# Sliders con initcolor='none' para quitar la línea roja inicial
+# Sliders de parámetros
 a_slider = Slider(ax=ax_a, label='Desaceleración (m/s²)', valmin=1, valmax=12, valinit=8.8, initcolor='none')
 d_slider = Slider(ax=ax_d, label='Distancia (m)', valmin=5, valmax=100, valinit=50, initcolor='none')
 dv_slider = Slider(ax=ax_dv, label='Δ Velocidad (m/s)', valmin=1, valmax=30, valinit=15, initcolor='none')
@@ -187,7 +178,7 @@ dv_slider = Slider(ax=ax_dv, label='Δ Velocidad (m/s)', valmin=1, valmax=30, va
 sim_button = Button(ax_sim_button, 'SIMULAR SETUP', hovercolor='cyan')
 sol_button = Button(ax_sol_button, 'SOLUCIÓN COMPLETA', hovercolor='limegreen')
 
-# Estilo
+# Estilo de los sliders y botones
 for w in [a_slider, d_slider, dv_slider]:
     w.label.set_color(LIGHT_COLOR)
     w.valtext.set_color(LIGHT_COLOR)
