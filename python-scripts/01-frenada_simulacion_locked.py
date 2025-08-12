@@ -1,5 +1,5 @@
 # run with 
-# python3 -i "/Users/anibaloliveramorales/Documents/Laburo/Física para Mates/Python Scripts/frenada_simulacion_locked.py"
+# python3 -i "/Users/anibaloliveramorales/Documents/Laburo/Física para Mates/python-scripts/01-frenada_simulacion_locked.py"
 # activate with 
 # solution_unlocked = True
 
@@ -26,8 +26,8 @@ def load_svg_as_png_array(path_svg):
     return img
 
 # Cargar autos
-car_A_img = load_svg_as_png_array('Python Scripts/car-side-view-A.svg')
-car_B_img = load_svg_as_png_array('Python Scripts/car-side-view-B.svg')
+car_A_img = load_svg_as_png_array('python-scripts/01-car-side-view-A.svg')
+car_B_img = load_svg_as_png_array('python-scripts/01-car-side-view-B.svg')
 
 # --- CONFIGURACIÓN DE LA FIGURA Y EJES ---
 fig, (ax_sim, ax_space) = plt.subplots(2, 1, figsize=(10, 8.5),
