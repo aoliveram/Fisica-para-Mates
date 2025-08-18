@@ -2,6 +2,9 @@
 # Fusión del script funcional con la mejora de mostrar el resultado al final.
 
 import numpy as np
+import matplotlib
+# Fuerza un backend interactivo para que la animación actualice en VS Code/Terminal
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
@@ -11,6 +14,11 @@ import os
 # --- 1. Parámetros y Constantes ---
 g = 9.81
 NUM_ESCALONES = 40
+
+# Elegir estrategia de "pelota":
+#  - Si True: usar un círculo (patch) nativo de Matplotlib (robusto/estándar y muy fluido).
+#  - Si False: usar la imagen PNG con AnnotationBbox (puede ser más delicado según backend).
+USE_CIRCLE_BALL = True
 
 # --- 2. Configuración de la Figura y los Ejes ---
 fig, ax = plt.subplots(figsize=(10, 8))
@@ -43,8 +51,21 @@ escalera_line, = ax.plot([], [], 'k-', lw=2)
 # Pelota como imagen anclada bottom-center sobre el punto (x,y)
 offset_img = OffsetImage(ball_img, zoom=0.025)
 ball_artist = AnnotationBbox(offset_img, (0, 0), frameon=False, box_alignment=(0.5, 0.0), zorder=5)
-ball_artist.set_transform(ax.transData)
 ax.add_artist(ball_artist)
+
+# Alternativa estándar y robusta: usar un círculo (patch) como "sprite" de la pelota
+# El radio se ajustará dinámicamente en launch() según w,h
+circle_ball = plt.Circle((0.0, 0.0), radius=0.1, color='red', zorder=6, visible=False)
+ax.add_patch(circle_ball)
+
+# Alternar visibilidad según estrategia elegida
+if USE_CIRCLE_BALL:
+    ball_artist.set_visible(False)
+    circle_ball.set_visible(True)
+else:
+    ball_artist.set_visible(True)
+    circle_ball.set_visible(False)
+
 trace, = ax.plot([], [], ':', color='red', alpha=0.6)
 resultado_text = ax.text(0.95, 0.95, "Ajusta los parámetros y presiona LANZAR", 
                          ha='right', va='top', transform=ax.transAxes, 
@@ -72,6 +93,11 @@ def dibujar_escalera(w, h):
     ax.set_ylim(-(25 * h) - 0.5 * h, h * 2 + 0.5 * h)
     ax.set_aspect('equal', 'box')
 
+    # Ajustar un radio razonable en unidades de datos si se usa círculo
+    if USE_CIRCLE_BALL:
+        # Radio proporcional al tamaño del escalón
+        circle_ball.set_radius(0.25 * min(max(w, 1e-6), max(h, 1e-6)))
+
 def altura_escalera_en_x(x, w, h):
     # Superficie de la escalera como función de x
     if x <= 0:
@@ -91,9 +117,20 @@ def launch(event):
         
         # Resetear el estado visual, incluyendo el texto de resultado.
         dibujar_escalera(w, h)
-        ball_artist.xy = (0.0, 0.0)
-        ball_artist.update_positions(fig.canvas.get_renderer())
-        ball_artist.set_visible(True)
+        # Reset de pelota según estrategia
+        if USE_CIRCLE_BALL:
+            circle_ball.set_visible(True)
+            circle_ball.center = (0.0, 0.0)
+            ball_artist.set_visible(False)
+        else:
+            ball_artist.xy = (0.0, 0.0)
+            ball_artist.update_positions(fig.canvas.get_renderer())
+            ball_artist.set_visible(True)
+            circle_ball.set_visible(False)
+        
+        if USE_CIRCLE_BALL:
+            circle_ball.set_radius(0.25 * min(max(w, 1e-6), max(h, 1e-6)))
+        
         trace.set_data([], [])
         resultado_text.set_text("") # Limpiar el texto anterior.
         
@@ -120,8 +157,11 @@ def launch(event):
             y_superficie = altura_escalera_en_x(x_i, w, h)
             if i > 2 and x_i > 1e-3 and y_i <= y_superficie:
                 y_i = y_superficie
-                ball_artist.xy = (x_i, y_i)
-                ball_artist.update_positions(fig.canvas.get_renderer())
+                if USE_CIRCLE_BALL:
+                    circle_ball.center = (x_i, y_i)
+                else:
+                    ball_artist.xy = (x_i, y_i)
+                    ball_artist.update_positions(fig.canvas.get_renderer())
                 x_trace.append(x_i)
                 y_trace.append(y_i)
                 trace.set_data(x_trace, y_trace)
@@ -129,8 +169,11 @@ def launch(event):
                 fig.canvas.flush_events()
                 plt.pause(0.01)
                 break
-            ball_artist.xy = (x_i, y_i)
-            ball_artist.update_positions(fig.canvas.get_renderer())
+            if USE_CIRCLE_BALL:
+                circle_ball.center = (x_i, y_i)
+            else:
+                ball_artist.xy = (x_i, y_i)
+                ball_artist.update_positions(fig.canvas.get_renderer())
             x_trace.append(x_i)
             y_trace.append(y_i)
             trace.set_data(x_trace, y_trace)
@@ -162,4 +205,4 @@ launch_button.on_clicked(launch)
 
 # --- 6. Estado Inicial y Ejecución ---
 dibujar_escalera(w_slider.valinit, h_slider.valinit)
-plt.show()
+plt.show(block=True)
