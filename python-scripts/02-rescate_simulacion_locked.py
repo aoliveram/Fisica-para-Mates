@@ -1,13 +1,17 @@
 # run with 
-# python3 -i "/Users/anibaloliveramorales/Documents/Laburo/Física para Mates/Python Scripts/rescate_simulacion_locked.py"
+# python3 -i "/Users/anibaloliveramorales/Documents/Laburo/Física para Mates/python-scripts/02-rescate_simulacion_locked.py"
 # activate with 
 # solution_unlocked = True
+
+# rescate_simulacion.py
 
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button
 import matplotlib.animation as animation
 from matplotlib.patches import Circle
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from matplotlib.lines import Line2D
 
 solution_unlocked = False  # Variable para controlar acceso a la solución
 
@@ -17,7 +21,7 @@ v0 = 15.0
 
 X_OBJETIVO = 3.0
 Y_OBJETIVO = 9.0
-TAMANO_OBJETIVO = 0.3
+TAMANO_OBJETIVO = 0.45
 
 # --- 2. CONFIGURACIÓN DE LA FIGURA Y LOS EJES ---
 fig, ax = plt.subplots(figsize=(10, 8))
@@ -35,16 +39,24 @@ ax.set_aspect('equal', 'box')
 cannon, = ax.plot([], [], 'k-', lw=5, zorder=5)
 projectile, = ax.plot([], [], 'o', color='gray', markersize=8, zorder=10)
 trace, = ax.plot([], [], ':', color='gray', alpha=0.7, zorder=9)
-# MEJORA 3: Añadir una etiqueta (label) al círculo para la leyenda.
-target_ball = Circle((X_OBJETIVO, Y_OBJETIVO), TAMANO_OBJETIVO/2, color='deepskyblue', zorder=5, label='Pelota')
-ax.add_patch(target_ball)
+#target_ball = Circle((X_OBJETIVO, Y_OBJETIVO), TAMANO_OBJETIVO/2, color='deepskyblue', zorder=5, label='Pelota')
+#ax.add_patch(target_ball)
+
+# Cargar imagen y crear OffsetImage
+img = plt.imread('python-scripts/04-ball.png')
+imagebox = OffsetImage(img, zoom=0.025)
+ab = AnnotationBbox(imagebox, (X_OBJETIVO, Y_OBJETIVO), frameon=False, zorder=5)
+ax.add_artist(ab)
+
 status_text = ax.text(0.5, 0.62, "Ajusta el ángulo y presiona LANZAR", 
                       ha='center', va='bottom', transform=ax.transAxes, fontsize=14)
 ani = None
 zone_fill = None
 
-# MEJORA 3 (continuación): Crear la leyenda.
-ax.legend(handles=[target_ball], loc='upper right')
+# Crear leyenda manualmente con Line2D para representar la pelota
+legend_elements = [Line2D([0], [0], marker='o', color='w', label='Pelota',
+                          markerfacecolor='deepskyblue', markersize=10)]
+ax.legend(handles=legend_elements, loc='upper right')
 
 # --- 4. FUNCIONES DE LA INTERFAZ ---
 
@@ -110,7 +122,6 @@ def show_zones(event):
         status_text.set_color('orange')
         fig.canvas.draw_idle()
         return
-
     if zone_fill is not None:
         for fill in zone_fill:
             fill.remove()
@@ -138,7 +149,6 @@ ax_zones = plt.axes([0.8, 0.025, 0.15, 0.04])
 theta_slider = Slider(ax=ax_theta, label=r'$\theta$ (°)', valmin=0, valmax=90, valinit=30)
 
 launch_button = Button(ax_launch, 'LANZAR', hovercolor='limegreen')
-
 zones_button = Button(ax_zones, 'Mostrar Zonas', hovercolor='cyan')
 
 # --- 6. Conectamos con Funciones de Interfaz ---
