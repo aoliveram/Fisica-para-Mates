@@ -1,5 +1,9 @@
+# Run with Python 'Interactive Window'
+
 import plotly.graph_objects as go
 import numpy as np
+import plotly.io as pio
+pio.renderers.default = "notebook"
 
 # --- Constantes y Parámetros Iniciales ---
 g = 9.81  # Aceleración de la gravedad (m/s^2)
