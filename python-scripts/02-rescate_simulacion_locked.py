@@ -1,5 +1,5 @@
 # run with 
-# python3 -i "/Users/anibaloliveramorales/Documents/Laburo/Física para Mates/python-scripts/02-rescate_simulacion_locked.py"
+# python3 -i "/Users/anibaloliveramorales/Documents/Laburo/D - Física para Mates/python-scripts/02-rescate_simulacion_locked.py"
 # activate with 
 # solution_unlocked = True
 
@@ -118,10 +118,14 @@ def show_zones(event):
     """Dibuja las zonas alcanzable e inalcanzable en el gráfico."""
     global zone_fill, solution_unlocked
     if not solution_unlocked:
-        status_text.set_text("Solución bloqueada. Pide al profesor que habilite el acceso.")
+        status_text.set_text("Solución bloqueada. El profesor(a) debe habilitar acceso.")
         status_text.set_color('orange')
         fig.canvas.draw_idle()
         return
+    # Mostrar mensaje de acceso habilitado
+    status_text.set_text("Acceso habilitado: mostrando zonas de alcance.")
+    status_text.set_color('limegreen')
+    fig.canvas.draw_idle()
     if zone_fill is not None:
         for fill in zone_fill:
             fill.remove()
@@ -146,9 +150,9 @@ ax_theta = plt.axes([0.25, 0.1, 0.6, 0.03])
 ax_launch = plt.axes([0.65, 0.025, 0.1, 0.04])
 ax_zones = plt.axes([0.8, 0.025, 0.15, 0.04])
 
-theta_slider = Slider(ax=ax_theta, label=r'$\theta$ (°)', valmin=0, valmax=90, valinit=30)
+theta_slider = Slider(ax=ax_theta, label=r'$\theta$ (°)', valmin=0, valmax=90, valinit=30, initcolor='none')
 
-launch_button = Button(ax_launch, 'LANZAR', hovercolor='limegreen')
+launch_button = Button(ax_launch, 'Lanzar!', hovercolor='limegreen')
 zones_button = Button(ax_zones, 'Mostrar Zonas', hovercolor='cyan')
 
 # --- 6. Conectamos con Funciones de Interfaz ---

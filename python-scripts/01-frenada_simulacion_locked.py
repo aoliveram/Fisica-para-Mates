@@ -1,5 +1,5 @@
 # run with 
-# python3 -i "/Users/anibaloliveramorales/Documents/Laburo/Física para Mates/python-scripts/01-frenada_simulacion_locked.py"
+# python3 -i "/Users/anibaloliveramorales/Documents/Laburo/D - Física para Mates/python-scripts/01-frenada_simulacion_locked.py"
 # activate with 
 # solution_unlocked = True
 
@@ -153,10 +153,15 @@ def simulate_setup(event):
 def show_full_solution(event):
     global solution_unlocked
     if not solution_unlocked:
-        status_text.set_text("Solución bloqueada. Pide al profesor que habilite el acceso.")
+        status_text.set_text("Solución bloqueada. El profesor(a) debe habilitar acceso.")
         status_text.set_color('orange')
         fig.canvas.draw_idle()
         return
+
+    # Mostrar mensaje de acceso habilitado
+    status_text.set_text("Acceso habilitado: mostrando solución.")
+    status_text.set_color('limegreen')
+    fig.canvas.draw_idle()
 
     a = a_slider.val
     d_range = np.linspace(d_slider.valmin, d_slider.valmax, 150)
@@ -179,12 +184,12 @@ ax_sim_button = plt.axes([0.3, 0.025, 0.18, 0.04])
 ax_sol_button = plt.axes([0.52, 0.025, 0.18, 0.04])
 
 # Sliders de parámetros
-a_slider = Slider(ax=ax_a, label='Desaceleración (m/s²)', valmin=1, valmax=12, valinit=8.8, initcolor='none')
-d_slider = Slider(ax=ax_d, label='Distancia (m)', valmin=5, valmax=100, valinit=50, initcolor='none')
-dv_slider = Slider(ax=ax_dv, label='Δ Velocidad (m/s)', valmin=1, valmax=30, valinit=15, initcolor='none')
+a_slider = Slider(ax=ax_a, label='a (m/s²)', valmin=1, valmax=12, valinit=8.8, initcolor='none')
+d_slider = Slider(ax=ax_d, label='D    (m)', valmin=5, valmax=100, valinit=50, initcolor='none')
+dv_slider = Slider(ax=ax_dv, label='Δv (m/s)', valmin=1, valmax=30, valinit=15, initcolor='none')
 
-sim_button = Button(ax_sim_button, 'SIMULAR SETUP', hovercolor='cyan')
-sol_button = Button(ax_sol_button, 'SOLUCIÓN COMPLETA', hovercolor='limegreen')
+sim_button = Button(ax_sim_button, 'Simular Frenada', hovercolor='cyan')
+sol_button = Button(ax_sol_button, 'Solución', hovercolor='limegreen')
 sol_button.label.set_color('black')
 sol_button.on_clicked(show_full_solution)
 

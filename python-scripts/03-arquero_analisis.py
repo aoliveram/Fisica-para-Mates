@@ -1,5 +1,5 @@
 # arquero_analisis.py
-# Versión básica de análisis, diseñada para claridad
+# Versión básica de análisis.
 
 import numpy as np
 import matplotlib.pyplot as plt

@@ -29,7 +29,7 @@ ring2_patch = Circle((x2, y2), R2, fc='none', ec='cyan', lw=2, ls='--'); ax.add_
 cannon = Rectangle((-2, -0.5), 4, 1, fc='gray', ec='white'); ax.add_patch(cannon)
 projectile, = ax.plot([], [], 'o', color='orange', markersize=10, zorder=10)
 trace, = ax.plot([], [], ':', color='orange', alpha=0.7)
-status_text = ax.text(0.5, 1.05, "Apunta y presiona LANZAR", ha='center', va='bottom', 
+status_text = ax.text(0.5, 0.7, "Apunta y presiona Lanzar!", ha='center', va='bottom', 
                       transform=ax.transAxes, fontsize=14, color=LIGHT_COLOR)
 ani = None
 
@@ -122,13 +122,13 @@ def launch(event):
 
 # --- 5. Creación y Conexión de Widgets ---
 ax_v0 = plt.axes([0.25, 0.15, 0.6, 0.03]);
-v0_slider = Slider(ax=ax_v0, label='Velocidad (m/s)', valmin=10, valmax=60, valinit=35)
+v0_slider = Slider(ax=ax_v0, label=r'$v_0$ (m/s)', valmin=10, valmax=60, valinit=35, initcolor='none')
 
 ax_theta = plt.axes([0.25, 0.1, 0.6, 0.03]);
-theta_slider = Slider(ax=ax_theta, label='Ángulo (°)', valmin=0, valmax=90, valinit=45)
+theta_slider = Slider(ax=ax_theta, label=r'$\theta$ (°)', valmin=0, valmax=90, valinit=45, initcolor='none')
 
 ax_launch = plt.axes([0.8, 0.025, 0.1, 0.04]);
-launch_button = Button(ax_launch, 'LANZAR', hovercolor='limegreen')
+launch_button = Button(ax_launch, 'Lanzar!', hovercolor='limegreen')
 
 for w in [v0_slider, theta_slider]: 
     w.label.set_color(LIGHT_COLOR)
