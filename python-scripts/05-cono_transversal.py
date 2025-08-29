@@ -74,7 +74,7 @@ nx_line = L*np.cos(ang_normal)
 ny_line = L*np.sin(ang_normal)
 ax.add_patch(FancyArrowPatch((x_c, y_c), (x_c+nx_line, y_c+ny_line),
                              arrowstyle='-|>', mutation_scale=12, lw=2, color='k'))
-ax.text(x_c + nx_line - 0.25, y_c + ny_line + 0.05, "normal", fontsize=9)
+ax.text(x_c + nx_line - 0.60, y_c + ny_line + 0.125, "normal", fontsize=9)
 
 # Arco para theta en el vértice
 arc_r = 0.9
@@ -90,14 +90,12 @@ arc_radius = 0.65
 arc_x = x_c - arc_radius * np.sin(phi_t)
 arc_y = y_c + arc_radius * np.cos(phi_t)
 ax.plot(arc_x, arc_y, lw=1.4, color='k')
-ax.text(x_c - arc_radius * np.sin(phi/2) - 0.12,
-        y_c + arc_radius * np.cos(phi/2) + 0.05,
+ax.text(x_c - arc_radius * np.sin(phi/2) - 0.35,
+        y_c + arc_radius * np.cos(phi/2) + 0.15,
         r"$\phi_{\rm normal}$", fontsize=10)
 
-# Línea segmentada vertical desde el centro del arco de phi_normal hasta el vértice
-arc_center_x = x_c - arc_radius * np.sin(phi/2)
-arc_center_y = y_c + arc_radius * np.cos(phi/2)
-ax.plot([arc_center_x, arc_center_x], [arc_center_y, 0],
+# Línea segmentada vertical desde el inicio de la normal hasta el límite superior del cono
+ax.plot([x_c, x_c], [y_c, H_top],
         ls='--', lw=1.3, color='gray')
 
 # Etiquetas útiles
