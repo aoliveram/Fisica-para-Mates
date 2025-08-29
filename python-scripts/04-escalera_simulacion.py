@@ -18,7 +18,7 @@ plt.subplots_adjust(left=0.1, bottom=0.35, top=0.9)
 escalera_line, = ax.plot([], [], 'k-', lw=2)
 projectile, = ax.plot([], [], 'o', color='red', markersize=12.5)
 trace, = ax.plot([], [], ':', color='red', alpha=0.6)
-resultado_text = ax.text(0.95, 0.95, "Ajusta los parámetros y presiona LANZAR", 
+resultado_text = ax.text(0.95, 0.95, "Ajusta los parámetros y presiona Lanzar!", 
                          ha='right', va='top', transform=ax.transAxes, 
                          fontsize=12, color='black', bbox=dict(facecolor='white', alpha=0.7))
 
@@ -90,10 +90,10 @@ ax_w  = plt.axes([0.275, 0.15, 0.5, 0.03])
 ax_h  = plt.axes([0.275, 0.10, 0.5, 0.03])
 ax_launch = plt.axes([0.8, 0.05, 0.1, 0.04])
 
-v0_slider = Slider(ax=ax_v0, label='Velocidad Inicial: v₀ (m/s)', valmin=0.5, valmax=10, valinit=3.0)
-w_slider  = Slider(ax=ax_w,  label='Ancho Escalón: w (m)',       valmin=0.05, valmax=0.50, valinit=0.28)
-h_slider  = Slider(ax=ax_h,  label='Altura Escalón: h (m)',      valmin=0.05, valmax=0.50, valinit=0.18)
-launch_button = Button(ax_launch, 'LANZAR', hovercolor='limegreen')
+v0_slider = Slider(ax=ax_v0, label=r'Velocidad inicial:  $v_0$ (m/s)', valmin=0.5, valmax=10, valinit=3.0, initcolor='none')
+w_slider  = Slider(ax=ax_w,  label=r'    Ancho escalón:  $w$     (m)', valmin=0.05, valmax=0.50, valinit=0.28, initcolor='none')
+h_slider  = Slider(ax=ax_h,  label=r'   Altura escalón:  $h$     (m)', valmin=0.05, valmax=0.50, valinit=0.18, initcolor='none')
+launch_button = Button(ax_launch, 'Lanzar!', hovercolor='limegreen')
 
 # --- 5. Conectar los Widgets a las Funciones ---
 launch_button.on_clicked(launch)
