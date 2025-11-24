@@ -23,6 +23,15 @@ build/
 # PDF's
 *.pdf
 
+# LaTeX temporales
+*.aux
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.toc
+*.synctex.gz
+
 # Carpetas
 Ejercicios Tipler/
 PIFD/
