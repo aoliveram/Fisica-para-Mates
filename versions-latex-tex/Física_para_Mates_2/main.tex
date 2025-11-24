@@ -1,0 +1,1372 @@
+\documentclass[12pt, a4paper]{report}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{array}
+\usepackage{float} % For H option in figure/table
+\usepackage{siunitx} % For units
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{soul}
+\usepackage{rotating} % Para texto vertical en cabeceras de tabla
+\usepackage{multicol} % Para la leyenda
+\usepackage{booktabs} % Para líneas más estéticas en la tabla
+\usepackage{hyperref}
+\usepackage{xcolor}
+% Compilar con: lualatex --shell-escape o xelatex --shell-escape
+\usepackage{listings}
+\usepackage{xcolor}
+\lstdefinestyle{mypython}{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  numbers=left, numbersep=6pt,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+  keywordstyle=\bfseries\color{blue!60!black},
+  stringstyle=\color{green!40!black},
+  commentstyle=\itshape\color{black!50},
+  frame=single,
+  rulecolor=\color{black!20}
+}
+
+
+\geometry{a4paper, margin=2cm} % Ajuste para tabla ancha y modo paisaje
+
+\setcounter{tocdepth}{1} % Define la profundidad del índice para mostrar solo secciones (y capítulos si los hay)
+\renewcommand{\familydefault}{\sfdefault} % Sans-serif font like the original PDF
+% Comando para texto vertical en cabeceras
+\newcommand{\rockbottom}[1]{\rotatebox{90}{\parbox{2.8cm}{\raggedright #1}}}
+\newcommand{\rockbottomshort}[1]{\rotatebox{90}{\parbox{2.2cm}{\raggedright #1}}}
+\newcommand{\rockbottomtiny}[1]{\rotatebox{90}{\parbox{1.8cm}{\raggedright #1}}}
+\newcommand{\rockbottomsupertiny}[1]{\rotatebox{90}{\parbox{1.5cm}{\raggedright #1}}}
+
+\geometry{margin=1in}
+\title{\textbf{Física para Mates}}
+\author{Aníbal Olivera M.}
+\date{Agosto 2025}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents % Inserta el índice de contenidos aquí
+
+\newpage
+
+\chapter{Resumen Problemas}
+\label{chap:resumen}
+
+Esta tabla resume los principales contenidos de las asignaturas de Matemáticas y Física abordados en cada problema del documento. 
+
+\vspace{1cm} % Espacio antes de la tabla
+
+\begin{table}[H]
+\centering
+\footnotesize % Reducir tamaño de fuente para que quepa mejor
+\setlength{\tabcolsep}{3pt} % Reducir espacio entre columnas
+\begin{tabular}{@{}lcccccccccccc@{}} % @{} quita espacio al inicio/final
+\toprule
+ & \multicolumn{5}{c}{\textbf{Contenidos Matemáticos}} & \multicolumn{3}{c}{\textbf{Contenidos Físicos}} & \multicolumn{3}{c}{\textbf{Tipo de Problema}} & \multicolumn{1}{c}{\textbf{Asignatura}} \\
+\cmidrule(lr){2-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-13}
+\textbf{Problema} &
+\rockbottomtiny{Trigonometría} &
+\rockbottomtiny{Vectores} &
+\rockbottomtiny{Geom. Analítica} &
+\rockbottomtiny{Logaritmos} &
+\rockbottomtiny{Cálc. Diferen.} &
+\rockbottomtiny{Cinemática} &
+\rockbottomtiny{Leyes Newton} &
+\rockbottomtiny{Estática /Equilibrio} &
+\rockbottomsupertiny{Hoja Cálculo} &
+\rockbottomsupertiny{Prob. Pizarra} &
+\rockbottomsupertiny{Simul. 3D} &
+\rockbottomshort{Sugerida} \\
+\midrule
+Cinemática 1 (4.1)   &   &   & X &   &   & X &   &   &   & X & X & 1 \\
+Balística 1 (4.2)    & X & X & X &   &   & X &   &   &   & X & X & 1 \\
+Balística 2 (4.3)    & X & X & X &   &   & X &   &   &   & X & X & 1 \\
+Balística 3 (4.4)    &   & X & X &   &   & X &   &   &   & X & X & 1 \\
+Sólido Rev. 1 (4.5)     & X & X & X &   &   & X & X & X &   & X & X & 1 \\
+\midrule
+Sólido Rev. 2 (5.1)     &   & X & X &   & X & X & X & X &   &   & X & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.5cm}
+\noindent \textbf{Asignatura Sugerida:}
+\begin{itemize}
+    \item[1:] Geometría
+    \item[2:] Introducción al Cálculo
+    \item[3:] Cálculo Diferencial
+    \item[4:] Cálculo Integral.
+\end{itemize}
+
+\chapter{Simulaciones Computacionales}
+
+\section{Cinemática 1: Frenada de Emergencia}
+
+Este problema analiza la cinemática de una frenada para evitar una colisión. Hay dos autos, auto A y auto B, moviéndose en la misma dirección, de forma  paralela. El auto A viene más rápido que el auto B, y de pronto se da cuenta que tiene que comenzar a frenar para evitar un accidente. El auto A comienza a frenar cuando están a una distancia \(D\) el uno del otro, con una aceleración constante \(-a <0\).  
+
+¡Este ejercicio viene con una \textbf{simulación}! Corre \texttt{01-frenada-simulacion-locked.py}\footnote{Nota 1: Para simular, solo presiona 'Simular Frenada'.}\footnote{Nota 2: el botón 'Solución' está desactivado y se activará cuando el profesor(a) lo determine.} para ver si hay o no un accidente una vez que modificas los parámetros de diferencias de velocidades \(\Delta v = v_A - v_B\) y la distancia entre los autos \(D\). Prueba cosas como estas:
+
+
+\begin{enumerate}
+    \item \textbf{Sim:} Estimación de aceleración mínima: 
+        
+    El auto A viaja a \(v_A = \SI{108}{km/h}\), y el otro auto B a \(v_B = \SI{72}{km/h}\). El auto A comienza a frenar cuando \(D = \SI{50}{m}\). 
+    
+    Según lo que simulaste, ¿cuál es la aceleración constante \(a_{\text{min}}\) mínima que debe aplicar el auto A para evitar la colisión?
+    
+    \item \textbf{Sim:} Estimación de la diferencia máxima de velocidades:
+    
+    Un auto de pasajeros estándar, en asfalto seco, puede frenar con una aceleración con \(-a = -\SI{8.8}{m/s^2}\). Si el conductor mantiene una distancia de seguridad de \(D = \SI{25}{m}\) con el auto de adelante, ¿cuál es la diferencia de velocidad máxima \(\Delta v_{\text{max}} = v_A - v_B\) que puede haber entre ellos para que el accidente sea evitable? Exprese su estimación en \(\SI{}{km/h}\)\footnote{    
+    PD: Puedes usar las velocidades en m/s: \vspace{0.35cm}
+
+    \(v_A = 108 \text{ km/h} = 30 \text{ m/s}\),
+
+    \(v_B = 72 \text{ km/h} = 20 \text{ m/s}\). }.
+    
+    \vspace{0.5cm}
+\end{enumerate}
+
+\newpage
+
+\vspace{0.5cm}
+\textbf{Preámbulo}
+\vspace{0.5cm}
+
+En este problema unidimensional podemos establecer las ecuaciones de posición de ambos autos simplemente como:
+\begin{itemize}
+    \item Posición del auto A: \hspace{1cm} \(x_A(t) = v_A t - \frac{1}{2} a t^2\)
+    \item Posición del auto B: \hspace{1cm} \(x_B(t) = D + v_B t\)
+\end{itemize}
+La colisión ocurre si la posición de ambos autos es la misma en algún momento. Es decir, \(x_A(t) = x_B(t)\) para algún tiempo \(t>0\). Buscaremos conocer en qué casos existe un accidente.
+
+    
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{frenada_simulacion_1.png}
+    \caption{Simulación de Frenada de Emergencia, con representación en el espacio de soluciones del problema.}
+\end{figure}
+
+\vspace{0.25cm}
+\textbf{Tu Tarea}
+\vspace{0.25cm}
+
+\begin{enumerate}
+    \item \textbf{Sim:} Familiaridad con la dinámica.
+    
+    Simularemos varios escenarios con distintas combinaciones \( (a, D, \Delta v )\). En particular:
+    \begin{enumerate}
+        \item Fija una \(\Delta v\) y varía solo \(D\).
+        \item Fija \(D\) y varía solo \(\Delta v\).
+        \item ¿Es igual de sensible la variación de \(\Delta v\) en comparación con \(D\)?
+    \end{enumerate}
+    
+
+    \item Modelo Matemático General:
+
+    A partir de la condición de accidente \(x_A(t) = x_B(t)\), encuentra una expresión general para saber si el choque es inevitable o no.
+
+    ¿Qué forma debería tener en un gráfico \(D\) vs \(\Delta v\)?
+
+    \item \textbf{Sim:} Solución en la Simulación:
+
+    El profesor activará el botón 'Solución'. ¿Tiene la forma que esperaban? 
+    
+    Si sé que con \((\Delta v_A, D_1)\) no hay accidente, ¿implica que tampoco hay accidente con \((2\Delta v_A, 2 D_1)\)?
+    
+    \item Haciendo uso del modelo matemático, verifica tus conclusiones de los ítems 2 y 3.
+    
+\end{enumerate}
+
+\subsection{Soluciones}
+
+\vspace{0.25cm}
+\textbf{Juegos}
+
+\subsubsection{1) Aceleración mínima}
+
+Los estudiantes deberían derivar a través de la simulación un valor mínimo de aceleración \(\approx\SI{1}{m/s^2}\).
+
+\subsubsection{2) Diferencia máxima de velocidad}
+
+Los estudiantes deberían derivar a través de la simulación un valor máximo de  \(\approx\SI{21}{m/s}\), o equivalentemente \(\approx\SI{76}{km/h}\).
+
+\vspace{0.75cm}
+\textbf{Tareas}
+
+\subsubsection{1) Familiaridad con la dinámica}
+
+Luego de seguir las indicaciones, los alumnos deberían tener varios puntos rojos y verdes que evidencien la naturaleza no-lineal de la dinámica. 
+
+El escenario físico es más sensible a los cambios en los valores de \(\Delta v\).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{frenada_simulacion_2.png}
+    \caption{Exploración del espacio de soluciones.}
+\end{figure}
+
+\subsubsection{2) Modelo Matemático General}
+La colisión ocurre si la posición de ambos autos es la misma en algún momento, es decir, \(x_A(t) = x_B(t)\) para algún tiempo \(t>0\):
+\[
+v_A t - \frac{1}{2} a t^2 = D + v_B t
+\]
+Reordenando en la forma de una ecuación cuadrática \(At^2 + Bt + C = 0\):
+\[
+\left(\frac{1}{2}a\right)t^2 + (v_B - v_A)t + D = 0
+\]
+Esta es una ecuación cuadrática para \textbf{aquellos \(t\) donde existe colisión}. Como bien sabes, las soluciones de \(t\) pueden estar en \(\mathbb{C}\). Existe colisión solo si existen valores \(t \in \mathbb{R}\). Equivalentemente, la colisión se evita si esta ecuación solo tiene soluciones del tipo \(t \in \mathbb{C}\), lo que significa que su discriminante (\(\Delta = B^2 - 4AC\)) debe ser negativo. El caso límite (un "toque") es cuando el discriminante es cero.
+\[
+\Delta = (v_B - v_A)^2 - 4\left(\frac{1}{2}a\right)(D) < 0
+\]
+\[
+(v_A - v_B)^2 - 2aD < 0
+\]
+Esta nos da la condición de seguridad general:
+\[
+(v_A - v_B)^2 < 2aD.
+\]
+
+Por lo tanto, el gráfico \(D\) vs \(\Delta v\) que represente el borde entre colisión y zona segura debería mostrar una forma funcional
+\(
+(v_A - v_B) = \sqrt{2aD},
+\)
+es decir, una relación \textbf{no lineal} entre \(D\) y \(\Delta v\).
+
+\subsubsection{3) Solución en la Simulación}
+
+La simulación puede mostrar los pares de combinaciones \((D,\Delta v)\) para los cuales hay colisión. 
+El botón 'Solución' está bloqueado por defecto, pero el profesor puede habilitarlo usando el comando \texttt{solution-unlocked = True}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{frenada_simulacion_3.png}
+    \caption{Solución del espacio de parámetros bloqueada.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{frenada_simulacion_4.png}
+    \caption{Espacio de parámetros para la desigualdad \((v_A - v_B)^2 < 2aD\).}
+\end{figure}
+
+\subsubsection{4) Cálculo de la Aceleración Mínima}
+
+\textbf{Parte 1}
+\vspace{0.25cm}
+
+Usamos la condición límite para encontrar la aceleración mínima. Sea \(\Delta v = v_A - v_B = 30 - 20 = 10\) m/s.
+\[
+a > \frac{(\Delta v)^2}{2D}
+\]
+\[
+a_{\text{\text{min}}} = \frac{(10 \text{ m/s})^2}{2(50 \text{ m})} = \frac{100}{100} = 1 \text{ m/s}^2
+\]
+El auto A debe acelerar a un mínimo de \(-a_{\text{\text{min}}}=-\SI{1.0}{m/s^2}\) para evitar la colisión.
+
+\vspace{0.25cm}
+\textbf{Parte 2}
+\vspace{0.25cm}
+
+Usamos la misma condición de seguridad, pero ahora la incógnita es \(\Delta v\).
+\[
+(\Delta v)^2 < 2aD
+\]
+Buscamos la diferencia de velocidad máxima, que corresponde al caso límite:
+\[
+\Delta v_{\text{max}} = \sqrt{2aD}
+\]
+Sustituimos los valores dados: \(a = \SI{8.8}{m/s^2}\) y \(D = 25\) m.
+\[
+\Delta v_{\text{max}} = \sqrt{2 (8.8)(25)} = \sqrt{440} \approx 20.98 \text{ m/s}
+\]
+Finalmente, convertimos este resultado a km/h:
+\[
+20.98 \frac{\text{m}}{\text{s}} \times \frac{3600 \text{ s}}{1 \text{ h}} \times \frac{1 \text{ km}}{1000 \text{ m}} \approx 75.5 \text{ km/h}
+\]
+Si el conductor mantiene una distancia de 25 metros, la diferencia de velocidad no debe superar los \SI{75.5}{km/h} para que una frenada de emergencia sea efectiva.
+
+\newpage
+
+\section{Balística 1: El Rescate de la Pelota}
+
+Unos mecánicos juegan a la pelota en su tiempo libre, hasta que por desgracia se queda atascada en un rincón de la estructura metálica, en la posición \(P = (\SI{3}{m}, \SI{9}{m})\). Para sacarla, solo deben darle un pequeño empujón a la pelota. 
+Usando un  compresor de aire que tenían disponible, fabrican un pequeño cañón que puede lanzar una piedra esférica para sacar la pelota. La velocidad de lanzamiento es fija, \(|v_0| = \SI{15}{m/s}\), y lo único que pueden ajustar es el ángulo del cañón. Tu misión es lograr darle un pequeño empujón a la pelota. Asume que la aceleración de gravedad es constante \(g \approx \SI{9.8}{m/s^2}\) y que la posición del cañón es \(O = (\SI{0}{m}, \SI{0}{m})\).
+
+\vspace{0.5cm}
+
+¡Este ejercicio viene con una \textbf{simulación}! Corre \texttt{02-rescate-simulacion.py}\footnote{Nota 1: Para simular, solo presiona 'Lanzar!'.}\footnote{Nota 2: el botón 'Mostrar Zonas' está desactivado y se activará cuando el profesor(a) lo determine.} ajustar el ángulo \(\theta\) del cañón. Prueba cosas como estas:
+
+\begin{enumerate}
+    \item \textbf{Sim:} Ajusta \(\theta\) en el simulador para darle un empujón a la pelota. ¿Puedes encontrar dos valores de \(\theta\) que rescaten la pelota?
+    \item \textbf{Sim:} ¿Qué ocurre si la pelota está en \(P = (\SI{10}{m}, \SI{10}{m})\)? ¿y en \(P = (\SI{20}{m}, \SI{4}{m})\)?
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{rescate_simulacion_1.png}
+    \caption{Simulación de proyectil para rescatar la pelota.}
+\end{figure}
+
+\newpage
+
+\vspace{0.5cm}
+\textbf{Preámbulo - Trayectoria del Proyectil}
+\vspace{0.5cm}
+
+En Física, este tipo de ejercicios se enmarcan en un paradigma muy conocido: \textbf{trayectoria del proyectil}, que hacen uso de las \textbf{ecuaciones del movimiento}, y que siempre siempre pueden escribir como:
+\[
+x(t) = x_0 + v_{0x} t + \frac{1}{2} a_{0x} t^2
+\]
+\[
+y(t) = y_0 + v_{0y} t + \frac{1}{2} a_{0y} t^2 
+\]
+
+En este caso, como el proyectil comienza desde el origen, entonces \(x_0=y_0=0\). Además, la única aceleración que cuenta es la gravedad, que solo afecta al eje\textit{-y}, por lo que \(a_{0x}=0\) y \(a_{0y}=-g\). Así que, considerando que toda velocidad inicial se puede descomponer en componentes:
+\[
+\vec{v}_0 = (v_{0x}, v_{0y}) = (v_0 \cos\theta, v_0 \sin\theta)
+\]
+
+Entonces, en nuestro caso, tenemos dos ecuaciones que permiten saber dónde está el proyectil en todo momento:
+\begin{equation}
+\quad x(t) = (v_0 \cos\theta) t
+\label{eq: mov 1}    
+\end{equation}
+\begin{equation}
+\quad y(t) = (v_0 \sin\theta) t - \frac{1}{2} g t^2 
+\label{eq: mov 2}    
+\end{equation}
+
+El primer paso es derivar una expresión general para la trayectoria del proyectil \(y(x)\) que no dependa del tiempo sino solamente de la posición \(x\), y de los parámetros  \(v_0\) y \(\theta\), y \(g\). Para esto, podemos combinar las dos ecuaciones que tenemos arriba: si despejamos \(t\) de la ecuación \ref{eq: mov 1}, 
+\[
+t = \frac{x}{v_0 \cos\theta},
+\]
+y sustituimos \(t\) en la ecuación \ref{eq: mov 2}, tenemos una expresión de la posición \(y\) del proyectil según la posición \(x\):
+\[
+y(x) = (v_0 \sin\theta) \left( \frac{x}{v_0 \cos\theta} \right) - \frac{1}{2} g \left( \frac{x}{v_0 \cos\theta} \right)^2
+\]
+Si te fijas, la posición \(y\) en realidad depende de tres cosas: \(y=y(x, \theta, v_0)\). A esta expresión la llamaremos \textbf{ecuación general de la trayectoria parabólica}:
+\begin{equation}
+y(x) = x \tan\theta - \left( \frac{g}{2 v_0^2 \cos^2\theta} \right) x^2
+\label{eq:trayectoria}
+\end{equation}
+
+\vspace{0.5cm}
+\textbf{Tu Tarea:}
+\begin{enumerate}
+    \item Demuestra que la \textbf{ecuación general de la trayectoria} se puede transformar en una ecuación cuadrática para \(u=\tan\theta\).
+    \item Resuelve la ecuación cuadrática para comprobar que 
+    \begin{equation}
+    \hspace{0.5cm}\tan\theta = \frac{1 \pm \sqrt{1 - 2\alpha y - (\alpha x)^2}}{\alpha x} 
+    \label{eq: tan theta}    
+    \end{equation}
+    es la expresión general que permite encontrar \(\tan \theta\) en función de \(\alpha=g/v^2_0\) y de la posición del objetivo,\((x,y)\). 
+    \item \textbf{Sim:} Reemplaza los valores del ejercicio para encontrar el ángulo específico en el que se debe lanar el cañón para mover la pelota. ¿El ángulo es único? Pruébalos en el simulador.
+    \item El cañón que inventaron solo puede lanzar a \(15\) m/s, así que existirán lugares donde donde la pelota es simplemente \textbf{inalcanzable} para el cañón, es decir, no hay \(\theta\in\mathbb{R}\) que sirva. ¿Cómo crees que se relaciona la expresión \ref{eq: tan theta} con esos lugares?
+    \item En Física, se conoce como '\textbf{parábola de seguridad}' a aquella parábola que separa las regiones que son alcanzables por un proyectil, de aquellas que son inalcanzables por el proyectil. Usa el determinante de la expresión \ref{eq: tan theta} para comprobar que la parábola de seguridad está dada por 
+    \[
+    y = \frac{1 - (\alpha x)^2}{2\alpha} .
+    \]
+    
+    ¿Cuáles son los lugares donde la pelota es inalcanzable? 
+    
+    \item \textbf{Sim:} Aprieta 'Mostrar Zonas' y compara tu solución con la dada por el \textbf{simulador}.
+\end{enumerate}
+
+\subsection{Soluciones}
+
+\vspace{0.25cm}
+\textbf{Juegos}
+
+\subsubsection{1) Encontrar dos \(\theta\).}
+
+Los alumnos experimentan con el simulador hasta encontrar dos \(\theta\) exitosos
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{rescate_simulacion_2.png}
+    \caption{Simulación de proyectil con un \(\theta\) exitoso.}
+\end{figure}
+
+\subsubsection{2) Casos extremos}
+
+Los alumnos experimentan hasta convencerse de que no hay $\theta$ que rescate la pelota.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{rescate_simulacion_3.png}
+    \caption{No hay \(\theta\) tal que el proyectil pase por \((\SI{20}{m},\SI{4}{m})\). Al apretar 'Mostrar Zonas' aparece un mensaje de 'Solución bloqueada'.}
+\end{figure}
+
+
+\vspace{0.75cm}
+\textbf{Tareas}
+
+\subsubsection{1) Transformación a Ecuación Cuadrática}
+Nuestra primera tarea es tomar la ecuación general de la trayectoria y manipularla para que se parezca a una ecuación cuadrática, donde nuestra incógnita será \(\tan\theta\).
+
+Partimos de la ecuación de la trayectoria:
+\[
+y = x \tan\theta - \left( \frac{g}{2 v_0^2 \cos^2\theta} \right) x^2
+\]
+El problema es que tenemos \(\tan\theta\) y \(\cos^2\theta\). Para unificarlo todo en términos de \(\tan\theta\), usamos la identidad trigonométrica fundamental: \(\sec^2\theta = 1 + \tan^2\theta\), sabiendo que \(\sec^2\theta = 1/\cos^2\theta\).
+\[
+y = x \tan\theta - \frac{g x^2}{2 v_0^2} (1 + \tan^2\theta)
+\]
+Ahora, si llamamos a nuestra incógnita \(u = \tan\theta\), la ecuación se ve mucho más simple:
+\[
+y = x u - \frac{g x^2}{2 v_0^2} (1 + u^2)
+\]
+Para que se vea como una ecuación cuadrática (\(a\ u^2 + b\ u + c = 0\)), distribuimos el término de la derecha y pasamos todo a un solo lado:
+\[
+y = x u - \frac{g x^2}{2 v_0^2} - \frac{g x^2}{2 v_0^2} u^2
+\]
+\[
+\left( \frac{g x^2}{2 v_0^2} \right) u^2 - (x) u + \left( y + \frac{g x^2}{2 v_0^2} \right) = 0
+\]
+Hemos demostrado que la ecuación de la trayectoria es, en efecto, una ecuación cuadrática para la variable \(u=\tan\theta\).
+
+\subsubsection{2) Solución General para \(\tan\theta\)}
+Ahora resolvemos esta ecuación cuadrática usando la fórmula general, 
+\[u = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}.\]
+Para simplificar la notación, definimos la constante \(\alpha = g/v_0^2\). Entonces, los coeficientes son:
+\[a = \frac{\alpha x^2}{2}\]
+\[b = -x\]
+\[c = y + \frac{\alpha x^2}{2}\]
+Sustituyendo en la fórmula cuadrática:
+\[
+\tan\theta = \frac{-(-x) \pm \sqrt{(-x)^2 - 4\left(\frac{\alpha x^2}{2}\right)\left(y + \frac{\alpha x^2}{2}\right)}}{2\left(\frac{\alpha x^2}{2}\right)}
+\]
+Simplificamos el denominador y el el discriminante:
+\[
+\tan\theta = \frac{x \pm \sqrt{x^2 - 2\alpha x^2 y - \alpha^2 x^4}}{\alpha x^2}
+\]
+Finalmente, cancelamos una \(x\) del numerador y del denominador, lo que nos deja con la expresión general que queríamos comprobar:
+\[
+\tan\theta = \frac{1 \pm \sqrt{1 - 2\alpha y - (\alpha x)^2}}{\alpha x}.
+\]
+
+\subsubsection{3) Aplicación Numérica y Unicidad de la Solución}
+
+En nuestro caso, tenemos los siguientes valores:
+\begin{itemize}
+    \item \(x = 3\) m
+    \item \(y = 9\) m
+    \item \(v_0 = 15\) m/s
+    \item \(g = 9.8\) m/s\(^2\)
+\end{itemize}
+Primero, calculamos nuestra constante \(\alpha\):
+\[
+\alpha = \frac{g}{v_0^2} = \frac{9.8}{(15)^2} = \frac{9.8}{225} \approx 0.04356
+\]
+Reemplazamos los otros valores para encontrar \(\tan\theta\):
+\[
+\tan\theta = \frac{1 \pm \sqrt{1 - 2(0.04356)(9) - (0.04356 \cdot 3)^2}}{0.04356 \cdot 3}
+\]
+Calculamos los términos dentro de la raíz:
+\[
+\tan\theta = \frac{1 \pm \sqrt{1 - 0.78408 - (0.13068)^2}}{0.13068}
+\]
+\[
+\tan\theta = \frac{1 \pm \sqrt{1 - 0.78408 - 0.01708}}{0.13068} = \frac{1 \pm \sqrt{0.19884}}{0.13068}
+\]
+\[
+\tan\theta \approx \frac{1 \pm 0.4459}{0.13068}
+\]
+Como el discriminante es positivo, entonces existen \textbf{dos soluciones reales}:
+\[
+\tan(\theta_1) \approx \frac{1 + 0.4459}{0.13068} \approx 11.06
+\]
+\[
+\tan(\theta_2) \approx \frac{1 - 0.4459}{0.13068} \approx 4.24
+\]
+Finalmente, encontramos los dos ángulos usando la función arcotangente:
+\[
+\theta_1 = \arctan(11.06) \approx 84.84^\circ
+\]
+\[
+\theta_2 = \arctan(4.24) \approx 76.73^\circ
+\]
+Esto significa que los mecánicos tienen dos opciones: un tiro muy alto (casi 85°) o un tiro un poco más bajo (casi 77°).
+
+\subsubsection{4) La Condición de Inalcanzable}
+
+Si la expresión para \(\tan\theta\) nos da un resultado que no es un número real, significa que no hay un ángulo real que podamos ajustar en el cañón para que funcione. Esto ocurre cuando el término dentro de la raíz cuadrada es negativo.
+\[
+1 - 2\alpha y - (\alpha x)^2 < 0
+\]
+Por lo tanto, los lugares \((x,y)\) donde la pelota es inalcanzable son todos aquellos puntos que hacen que esa expresión sea menor que cero.
+
+\subsubsection{5) La Parábola de Seguridad}
+
+La frontera exacta entre la zona alcanzable y la inalcanzable es el caso límite, es decir, donde justo existe una única solución para el ángulo.
+\[
+1 - 2\alpha y - (\alpha x)^2 = 0
+\]
+Para tener 'La Parábola de Seguridad', podemos despejar \(y\) para obtener la expresión \(y(x)\) que define esa parábola:
+\[
+2\alpha y = 1 - (\alpha x)^2
+\]
+\[
+y = \frac{1 - (\alpha x)^2}{2\alpha}
+\]
+Por lo que corroboramos la expresión del enunciado. 
+
+Para el cañón de los mecánicos, con \(\alpha \approx 0.04356\), la frontera de lo posible está definida por la Parábola de Seguridad:
+\[
+y(x) = \frac{1 - (0.04356 x)^2}{2(0.04356)} =\approx 11.48 - 0.02178 x^2
+\]
+Cualquier pelota atascada en una posición \((x,y)\) tal que \(y > 11.48 - 0.02178 x^2\) será \textbf{inalcanzable}.
+
+\subsubsection{6) Solución en Simulador}
+
+El profesor activa la opción para ver las soluciones al apretar el botón 'Mostrar Zonas'.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{rescate_simulacion_4.png}
+    \caption{Simulación con región inalcanzable.}
+\end{figure}
+
+
+\newpage
+
+\section{Balística 2: El Desafío del Arquero}
+
+Un arquero, situado en el origen \((\SI{0}{m}, \SI{0}{m})\), debe disparar una flecha para que esta pase a través de dos anillos circulares. El primer anillo, de radio \(R_1\), está centrado en \((x_{c1}, y_{c1})\). El segundo anillo, de radio \(R_2\), está centrado en \((x_{c2}, y_{c2})\). El desafío es establecer las condiciones matemáticas que deben cumplir la velocidad de lanzamiento \(v_0\) y el ángulo \(\theta\) para que la hazaña sea posible.
+
+\vspace{0.5cm}
+
+¡Este ejercicio viene con una \textbf{simulación}! Corre \texttt{03-arquero-simulacion.py}\footnote{Nota 1: Para simular, solo presiona 'Lanzar!'.} ajustar la velocidad \(v_0\) de lanzamiento y el ángulo \(\theta\) del cañón. Prueba cosas como estas:
+
+\begin{enumerate}
+    \item Encuentra una combinación que logre pasar por ambas argollas.
+    \item Una vez encontrada una combinación, mueve de a poco uno de los parámetros \textbf{hasta que ya no funcione}.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{arquero_simulacion_1.png}
+    \caption{Captura de análisis espacio de soluciones para \texttt{03-arquero\_simulacion.py}.}
+\end{figure}
+
+\vspace{0.5cm}
+\textbf{Preámbulo - Trayectoria del Proyectil}
+\vspace{0.5cm}
+
+Como derivamos en el ejercicio del 'Rescate del Satélite', la ecuación \ref{eq:trayectoria} describe la trayectoria de un proyectil que se lanza desde el origen de coordenadas:
+\[
+y(x) = x \tan\theta - \left( \frac{g}{2 v_0^2 \cos^2\theta} \right) x^2.
+\]
+Además, podemos establecer una condición para saber si una flecha pasa por el interior de un anillo. Si la flecha está a una altura \(y_{\text{f}}\) justo en el punto del eje-x donde hay un anillo de centro \(y_{\text{a}}\)y radio \(R\), entonces la flecha pasará por su interior si se cumple:
+\[
+-R < y_{\text{f}} - y_{\text{a}} < R.
+\]
+
+\newpage
+
+\textbf{Tu Tarea:}
+\vspace{0.5cm}
+
+\begin{enumerate}
+    \item Para el primer anillo, escribe la inecuación matemática que garantiza que la flecha pase por su interior.
+    
+    Haz lo mismo para el segundo anillo.
+
+    Por último, escribe la condición completa para que el arquero logre su objetivo.
+\end{enumerate}
+
+Como puedes ver, el problema se reduce a encontrar los pares de valores \((v_0, \theta)\) que satisfacen simultáneamente dos inecuaciones. Resolver este sistema analíticamente es extremadamente complejo. Seguiremos el siguiente procedimiento:
+\begin{enumerate}
+    \item[2.] \textbf{Sim:} Usando el \textit{simulador} y la \textit{plantilla} de más abajo, encuentra una combinación que logre pasar por ambas argollas.
+    
+    Una vez encontrada una combinación, mueve de a poco uno de los parámetros hasta que ya no funcione.
+    
+    Pinta la región donde sí funcionó. 
+    \item[3.] \textbf{Sim:} Vuelve a la primera combinación que funcionó. Ahora varía ligeramente el otro parámetro hasta que deje de funcionar. Dibuja la región donde funcionó.
+    \item[4.] \textbf{Sim:} Repite este procedimiento hasta que creas que se agotaron las combinaciones.
+\end{enumerate}
+
+Lo que estamos haciendo es crucial en Física de sistemas complejos, y es llamada \textit{región de solución en el espacio de parámetros} \((v_0,\theta)\).
+\begin{enumerate}
+    \item[5.] Crea un script de Python que resuelva el mismo problema, asegurándote de que sí estudie todas las posibles combinaciones de \((v_0,\theta)\). 
+    
+    ¿Habían regiones que no alcanzaste a explorar?
+\end{enumerate}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.75\linewidth]{arquero_analisis_plantilla.png}
+        \caption{Plantilla espacio de soluciones Desafío del Arquero.}
+    \end{figure}
+        
+\subsection{Soluciones}
+
+
+\subsubsection{1) Sistema de Inecuaciones}
+Para que la flecha pase por el primer anillo, en la posición horizontal \(x_{c1}\), su altura vertical \(y(x_{1})\) debe estar dentro del rango vertical del anillo. Es decir, la distancia entre el centro del anillo \((x_{c1}, y_{c1})\) y el punto de la trayectoria \((x_{1}, y(x_{1}))\) debe ser menor que el radio \(R_1\).
+\[
+\text{Condición para el Anillo 1:} \quad -R_1 < y(x_{1}) - y_{c1} < R_1
+\]
+Sustituyendo la ecuación de la trayectoria, obtenemos la primera inecuación:
+\[
+(1) \quad -R_1 < x_{c1} \tan\theta - \left( \frac{g}{2 v_0^2 \cos^2\theta} \right) x_{c1}^2 - y_{c1} < R_1
+\]
+De manera análoga, para el segundo anillo en la posición \((x_{c2}, y_{c2})\) y de radio \(R_2\),
+\[
+\text{Condición para el Anillo 2:} \quad -R_2 < y(x_{2}) - y_{c2} < R_2
+\]
+Que se puede escribir como:
+\[
+(2) \quad -R_2 < x_{c2} \tan\theta - \left( \frac{g}{2 v_0^2 \cos^2\theta} \right) x_{c2}^2 - y_{c2} < R_2
+\]
+Por lo que la condición completa para que el arquero logre su objetivo queda como:
+\[
+\left(
+    -R_1 < x_{c1} \tan\theta - \left( \tfrac{g}{2 v_0^2 \cos^2\theta} \right) x_{c1}^2 - y_{c1} < R_1
+\right)
+\\
+\wedge
+\\
+\left(
+    -R_2 < x_{c2} \tan\theta - \left( \tfrac{g}{2 v_0^2 \cos^2\theta} \right) x_{c2}^2 - y_{c2} < R_2
+\right).
+\]
+
+
+\subsubsection{2) Uso de Simulación - 1}
+
+Aquí es donde una simulación computacional se vuelve indispensable. En \href{https://github.com/aoliveram/Fisica-para-Mates/blob/main/Python%20Scripts/arquero_simulacion.py}{este link} se puede encontrar el script \texttt{03-arquero\_simulacion.py}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{arquero_simulacion_2.png}
+    \caption{Captura de simulación \texttt{03-arquero\_simulacion.py}.}
+\end{figure}
+
+Los estudiantes usan la plantilla y dibujan la zona de parámetros que sí funcionó. Varían, por ejemplo, solo \(v_0\).
+
+\subsubsection{3) Uso de Simulación - 2}
+
+Los estudiantes usan la plantilla y dibujan la zona de parámetros que sí funcionó. Varían, por ejemplo, solo \(\theta\).
+
+\subsubsection{4) Uso de Simulación - 3}
+
+Los estudiantes han variado tanto \(v_0\) como \(\theta\). Se figuran la forma del espacio de soluciones. 
+
+\subsubsection{5) Construcción script de Python}
+
+Para la verificación del espacio de soluciones, podemos usar el script \texttt{03-arquero-analisi-py} disponible en \href{https://github.com/aoliveram/Fisica-para-Mates/blob/main/Python%20Scripts/arquero_analisis.py}{ este link} como una plantilla para que los alumnos terminen un código pre-armado que barre todas las configuraciones de parámetros que son exitosas. A continuación se muestra un código que revisa cada combinación \((v_0,\theta)\) y evalúa si cumple ambas condiciones:
+
+\begin{lstlisting}[style=mypython, caption={\texttt{arquero\_analisis.py}}]
+
+# arquero_analisis.py
+# Version basica de analisis.
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
+
+# --- 1. CONSTANTES Y PARAMETROS DEL ESCENARIO ---
+g = 9.81
+x_c1, y_c1, R1 = 40.0, 23.0, 4.0
+x_c2, y_c2, R2 = 65.0, 19.0, 6.0
+
+# --- 2. BUSQUEDA DE SOLUCIONES (Logica Basica con Bucles For) ---
+# Definimos los rangos de velocidad y angulo con pasos gruesos.
+paso = 0.5
+rango_velocidad = np.arange(10, 60, paso)
+rango_angulo = np.arange(0, 90, paso)
+
+# Determinamos el numero de filas y columnas para nuestra matriz.
+num_filas = len(rango_velocidad)  # Cada fila representa una velocidad
+num_columnas = len(rango_angulo)   # Cada columna representa un angulo
+
+# Creamos la matriz de resultados, inicialmente llena de ceros (fallos).
+resultados = np.zeros((num_filas, num_columnas))
+
+# ========== Analisis de Soluciones ===================
+
+# Bucle que itera sobre los INDICES de las filas (velocidades).
+for idx_v in range(num_filas):
+    
+    # Bucle for que itera sobre los INDICES de las columnas (angulos).
+    for idx_a in range(num_columnas):
+        
+        # Obtenemos el valor de la velocidad y el angulo correspondientes a los indices actuales.
+        # Este paso es ahora explicito y claro.
+        velocidad = rango_velocidad[idx_v]
+        angulo_deg = rango_angulo[idx_a]
+        
+        # --- Logica Fisica Directa ---
+        angulo_rad = np.radians(angulo_deg)
+        cos_theta = np.cos(angulo_rad)
+        tan_theta = np.tan(angulo_rad)
+        
+        if cos_theta < 1e-6:
+            continue
+        
+        # ==================================
+        # INICIO DEL SISTEMA DE INECUACIONES
+        # ==================================
+
+        y_x1 = x_c1 * tan_theta - (g * x_c1**2) / (2 * velocidad**2 * cos_theta**2)
+        exito_anillo1 = abs(y_x1 - y_c1) < R1
+        
+        y_x2 = x_c2 * tan_theta - (g * x_c2**2) / (2 * velocidad**2 * cos_theta**2)
+        exito_anillo2 = abs(y_x2 - y_c2) < R2
+        
+        if exito_anillo1 and exito_anillo2:
+            # Si es una solucion, usamos los indices (idx_v, idx_a) para marcar la celda correspondiente en nuestra matriz.
+            resultados[idx_v, idx_a] = 1
+
+        # ==================================
+        # FIN DEL SISTEMA DE INECUACIONES
+        # ==================================
+
+# ======== FIN Analisis de Soluciones ===================
+
+
+# --- 3. VISUALIZACION ---
+fig, ax = plt.subplots(figsize=(12, 9))
+
+# La visualizacion con imshow es la misma
+cax = ax.imshow(resultados, origin='lower', aspect='auto',
+                extent=[rango_angulo[0], rango_angulo[-1], rango_velocidad[0], rango_velocidad[-1]],
+                cmap='Greens', vmin=0, vmax=1.5)
+
+# --- Estilo del Grafico ---
+ax.set_title("Espacio de Soluciones", fontsize=16)
+ax.set_xlabel("Angulo de Lanzamiento (°)", fontsize=12)
+ax.set_ylabel("Velocidad Inicial (m/s)", fontsize=12)
+ax.set_xlim((20, 70))
+ax.set_ylim((15, 55))
+
+# Etiquetas de numeros en los ejes
+ax.xaxis.set_major_locator(MultipleLocator(10))
+ax.yaxis.set_major_locator(MultipleLocator(5))
+
+# Rejilla cada 0.5 unidades
+ax.xaxis.set_minor_locator(MultipleLocator(0.5))
+ax.yaxis.set_minor_locator(MultipleLocator(0.5))
+
+ax.grid(which='major', linestyle='--', linewidth='0.8', color='gray', alpha=0.5)
+ax.grid(which='minor', linestyle=':', linewidth='0.5', color='gray', alpha=0.3)
+
+fig.patch.set_alpha(0.0)
+ax.patch.set_alpha(0.0)
+
+plt.show()
+
+\end{lstlisting}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{arquero_analisis.png}
+    \caption{Captura de análisis espacio de soluciones para \texttt{03-arquero\_simulacion.py}.}
+\end{figure}
+
+\newpage
+\section{Balística 3: La Bola en la Escalera}
+
+Desde el borde superior donde comienza una escalera, se lanza \textbf{horizontalmente} una bola con velocidad inicial \(v_0\). La escalera consiste en escalones idénticos de ancho \(w\) y alto \(h\). El desafío es determinar en qué escalón, numerado como \(n=1, 2, 3, \dots\), aterrizará la bola por primera vez.
+
+\vspace{0.5cm}
+
+¡Este ejercicio viene con una \textbf{simulación}! Corre \texttt{04-escalera-simulacion.py}\footnote{Nota 1: Para simular, solo presiona 'Lanzar!'.} ajustar la velocidad \(v_0\) de lanzamiento, el ancho \(w\) y la altura \(h\) del escalón. Prueba cosas como estas:
+\begin{enumerate}
+    \item \textbf{Sim:} Lanza la bola a una velocidad \(v_0\) baja. Luego lánzala al doble de la velocidad. ¿En cuánto aumentó el \(n\) del escalón? ¿Cómo aumenta el número \(n\) en razón de la velocidad \(v_0\)?
+    \item \textbf{Sim:} Vuelve a una velocidad \(v_0\) baja y modifica solo el ancho \(w\) de los escalones. Si aumentas el ancho al doble, \(2w\), ¿es lo mismo que si dejas el ancho igual que antes, \(w\), pero doblas la velocidad a \(2v_0\)?
+    \item \textbf{Sim:} Mantén la misma velocidad \(v_0\) baja y modifica solo la altura \(h\) de los escalones. Si aumentas la altura al doble, \(2h\), ¿es lo mismo que si dejas la altura igual que antes, \(h\), pero bajas la velocidad a la mitad \(v_0/2\)?
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{escalera_simulacion_1.png}
+    \caption{Configuración inicial de la simulación.}
+\end{figure}
+
+\newpage
+
+\vspace{0.5cm}
+\textbf{Preámbulo}
+\vspace{0.5cm}
+
+Colocamos el origen (0,0) en el punto de lanzamiento. Las direcciones de los ejes son las usuales: \(+x\) hacia la derecha y la \(+y\) hacia arriba. Así, las ecuaciones de movimiento son:
+\[
+x(t) = v_0 t
+\]
+\[
+y(t) = -\frac{1}{2}gt^2,
+\]
+donde \(g=9.8\) m/s\(^2\). Las coordenadas del borde exterior del \textit{n-ésimo} escalón son:
+\[(x_n, y_n) = (n \cdot w, -n \cdot h).\]
+
+\textbf{Tu Tarea:}
+\vspace{0.5cm}
+
+\begin{enumerate}
+    \item Usa la \textbf{simulación} del lanzamiento de la bola. Prueba lanzando la bola a una velocidad \(v_0\) baja. Luego lánzala al doble de la velocidad. ¿En cuánto aumentó el \(n\) del escalón? ¿Cómo aumenta el número \(n\) en razón de la velocidad \(v_0\)?
+    \item Ya viste qué pasa al manipular \(v_0\). Ahora, mantén \(v_0 = 3\)m/s constante y duplica el ancho \(w\) de los escalones. ¿Qué le pasa a \(n\)? ¿Y si duplicas la altura \(h\)? ¿A qué cambio es más sensible el resultado?
+    \item Construyamos una expresión para \(n\). 
+    
+    Si la bola aterriza en el escalón \(n\), significa que su trayectoria pasa por encima del borde del escalón \(n-1\). Calcula la posición vertical de la bola justo en el momento de pasar por el \textit{n-ésimo} borde de escalón, es decir \(y(t_n)\).
+    \item Para que la bola aterrice en el escalón \(n\) (y no en uno anterior), su distancia vertical \(y(t_n)\) debe ser menor o igual a la altura de ese escalón, que es \(-nh\). Formaliza una desigualdad entre ambas distancias verticales y despeja \(n\). Esta expresión será función de \(v_0, w, h\) y \(g\).
+    \item Usa estos valores para tener un valor numérico del escalón donde cae por primera vez: \(h = 18 \text{ cm}, w = 28 \text{ cm}, v_0 = 3 \text{ m/s}\).
+\end{enumerate}
+
+\subsection{Soluciones}
+
+\subsubsection{A) \(n\) vs \(v_0\)}
+
+La simulación comienza con \(h = 18 \text{ cm}, w = 28 \text{ cm}, v_0 = 3 \text{ m/s}\). 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{escalera_simulacion_2.png}
+    \caption{Configuración inicial de la simulación.}
+\end{figure}
+
+Al variar \(v_0\), podremos tener una tabla del estilo:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+        \(v_0\) [m/s] & \(n\) \\
+        \hline
+        \textbf{3} \, \textcolor{gray}{\(\sim 3 \times 1\)} & \textbf{5} \, \textcolor{gray}{\(\sim 5 \times 1\)} \\
+        \textbf{6.05} \, \textcolor{gray}{\(\sim 3 \times 2\)} & \textbf{18} \, \textcolor{gray}{\(\sim 5 \times 4\)} \\
+        \textbf{9} \, \textcolor{gray}{\(\sim 3 \times 3\)} & \textbf{38} \, \textcolor{gray}{\(\sim 5 \times 8\)} \\
+        \dots & \dots \\
+    \end{tabular}
+\end{table}
+
+de donde se puede deducir un efecto cuadrático de \(v_0\) en \(n\). 
+
+\subsubsection{B) \(n\) vs \(h\) y \(n\) vs \(w\)}
+
+Lo mismo se puede hacer al variar los parámetros \(h\) y \(w\). Mantenemos \(v_0 = 3\) m/s y \(w = 0.28\) m constante, y variamos el valor de \(h\):
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+        \(h\) [m] & \(n\) \\
+        \hline
+        \textbf{0.18} \, \textcolor{gray}{\(\sim h \times 1\)} & \textbf{5} \, \textcolor{gray}{\(\sim 5 \times 1\)} \\
+        \textbf{0.36} \, \textcolor{gray}{\(\sim h \times 2\)} & \textbf{9} \, \textcolor{gray}{\(\sim 5 \times 2\)} \\
+        \textbf{0.54} \, \textcolor{gray}{\(\sim h \times 3\)} & \textbf{13} \, \textcolor{gray}{\(\sim 5 \times 3\)} \\
+    \end{tabular}
+    \caption{Variación de \(n\) al aumentar \(h\).}
+\end{table}
+
+de donde se deduce un efecto lineal de \(h\) en \(n\). Ahora mantenemos \(v_0 = 3\) m/s y \(h = 0.18\) m constante, y variamos el valor de \(w\):
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+        \(w\) [m] & \(n\) \\
+        \hline
+        \textbf{0.14} \, \textcolor{gray}{\(\sim w \times 0.5\)} & \textbf{17} \, \textcolor{gray}{\(\sim 5 \times 4\)} \\
+        \textbf{0.28} \, \textcolor{gray}{\(\sim w \times 1\)} & \textbf{5} \, \textcolor{gray}{\(\sim 5 \times 1\)} \\
+        \textbf{0.56} \, \textcolor{gray}{\(\sim w \times 2\)} & \textbf{2} \, \textcolor{gray}{\(\sim 5 \times 0.5\)} \\
+    \end{tabular}
+    \caption{Variación de \(n\) al modificar \(w\).}
+\end{table}
+
+de donde se deduce un efecto cuadrático inverso de \(w\) en \(n\).
+
+\subsubsection{C) Condición de Impacto y Solución}
+
+Consideremos el momento \(t_n\) en que la bola alcanza la distancia horizontal del borde del escalón \(n\):
+\[
+x(t_n) = n \cdot w \quad \Rightarrow \quad t_n = \frac{n \cdot w}{v_0}
+\]
+En ese momento, la caída vertical de la bola es:
+\[
+y(t_n) = -\frac{1}{2}g t_n^2 = -\frac{1}{2}g \left(\frac{n w}{v_0}\right)^2.
+\]
+
+\subsubsection{D) Expresión para n}
+
+Para que la bola aterrice en el escalón \(n\) (y no en uno anterior), su distancia vertical \(y(t_n)\) debe ser menor o igual a la altura de ese escalón, que es . Dicho de otro modo, si en el momento exacto en que la bola pasa por el \textit{n-ésimo} vértice, \(t_n\), la distancia \(y(t_n)\) es mayor que el vértice de la escalera \(-nh\), entonces es porque la bola pasa por arriba de ese escalón. Por lo tanto, \(y(t_n)\) debe ser menor que \(-nh\), que es la condición de impacto en escalón \textit{n} o superior:
+\[
+-\frac{1}{2}g \left(\frac{n w}{v_0}\right)^2 \le -n h
+\]
+Podemos simplificar esta desigualdad:
+\[
+\frac{g n w^2}{2 v_0^2} \ge h \quad \Rightarrow \quad n \ge \frac{2 h v_0^2}{g w^2}
+\]
+El número de escalón \(n\) en el que la bola aterriza será el \textbf{primer entero} que satisface esta condición (el entero más pequeño que es mayor o igual al valor del lado derecho). Esta operación matemática es la función "techo" (ceiling).
+\[
+n = \left\lceil \frac{2 h v_0^2}{g w^2} \right\rceil.
+\]
+La forma funcional corrobora los hallazgos de las secciones 1 y 2 de este ejercicio.
+
+\subsubsection{E) Reemplazo de valores}
+
+Si reemplazamos los valores \(h = 18 \text{ cm}, w = 28 \text{ cm}, v_0 = 3 \text{ m/s}\), tenemos como resultado \(n\approx4.217\). El primer entero que satisface \(n \ge 4.217\) es 5. La bola aterrizará en el 5º escalón.
+
+\newpage
+
+\section{Sólido revolución 1: Calculando la velocidad en una pista cónica}
+
+Un bloque de masa \( m \) se mueve, sin roce, en el interior de un cono de revolución cuya superficie es perfectamente lisa. El vértice del cono apunta hacia abajo, y el cono tiene un ángulo \(\theta\) entre el eje vertical del cono y su generatriz. Se dice que la masa gira establemente cuando su \textbf{altura \(h\)} es \textbf{constante}. En un giro estable, el bloque describe una trayectoria circular.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{cono_1.jpeg}
+    \caption{Cono con una canica en su interior a una altura $h$.}
+\end{figure}
+
+\vspace{0.5cm}
+
+¡Este ejercicio viene con una \textbf{simulación}! Corre \texttt{05-cono\_3D.py} y ajusta la velocidad \(v\) de la masa \(m\), el ángulo \(\theta\) de abertura del cono, y la altura \(h\) desde donde comienza a moverse la masa. El bloque siempre tendrá una masa de \(\SI{1}{kg}\). Prueba cosas como estas:
+\begin{enumerate}
+    \item \textbf{Sim:} Hay tres variables para modificar: \(v\), \(\theta\), y \(h\). Mueve solo \(v\) hasta que encuentres un valor en el que la masa gira en una altura constante.
+    
+    \item \textbf{Sim:} Ya tienes la velocidad \(v\) en la que la masa está rotando a una altura fija \(h\). Ahora encuentra otro par \((\theta,h)\) para el cual la masa puede rotar establemente a la misma velocidad \(v\).
+
+    \item \textbf{Sim:} Ahora fijemos la altura \(h\). Encuentra dos pares \((v,\theta)\) para los cuales la masa gira establemente.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.1\linewidth]{cono_3D_plot.png}
+    \caption{Visualización del cono 3D al correr \texttt{05-cono\_3D.py} usando Plotly con Python.}
+    \label{fig:cono_3D}
+\end{figure}
+
+\vspace{0.5cm}
+\textbf{Preámbulo}
+\vspace{0.5cm}
+    
+Para que el bloque se mantenga en movimiento circular uniforme a una altura \(h\) constante, deben cumplirse ciertas condiciones físicas. Asumiremos como ciertas las siguientes relaciones, derivadas de las leyes de Newton:
+\begin{enumerate}
+    \item Hay dos fuerzas principales sobre el bloque:
+    \begin{enumerate}
+        \item[1.1] Su peso \(\vec{P} = m\vec{g}\):
+        
+        Dirigido verticalmente hacia abajo, donde \(\vec{g}=(0,-g)\), y \(g=\SI{9.8}{m/s^2}\) es la aceleración de la gravedad. Por lo tanto:
+        \[
+        \vec{P}=(P_x,P_y)
+        \]
+        \[
+        \vec{P}=(0,-mg)
+        \]
+        
+        \item[1.2] La fuerza normal \(\vec{N}\):
+        
+        Ejercida por la superficie del cono, perpendicular a dicha superficie. Tiene componente no nula en el eje\(-x\) y en el eje\(-y\):
+        \[
+        \vec{N} = (N_y,N_x).
+        \]
+        Si la normal forma un ángulo \(\phi_{\text{normal}}\) con la vertical, entonces podemos escribir las componentes de esta fuerza:
+        \[
+        \vec{N} = (N\sin \phi_{\text{normal}}, N \cos \phi_{\text{normal}}).
+        \]
+    \end{enumerate}
+
+    Recordemos que en todo movimiento circular constante existe la fuerza centrífuga y la fuerza centrípeta. La fuerza centrífuga es la tendencia de todo objeto que rota en torno a un centro a continuar un camino en línea recta. ¿Por qué no sigue en línea recta? Pues porque hay una fuerza, ejercida por una cuerda o una superficie, que tira del cuerpo hacia el centro, y siempre es igual a \((mv^2/r, 0)\). 
+    
+    \item Equilibrio en la componente \(y\):
+    
+    Como el bloque no se acelera verticalmente (se mantiene a una altura \(h\) constante), la suma de las fuerzas en la dirección vertical debe ser cero.
+    
+    
+    Para que la altura \(h\) sea constante, la \textbf{suma} de las fuerzas en la dirección vertical debe ser cero. Esto implica que la suma de las componentes verticales de \(\vec{P}\) y \(\vec{N}\) deben ser igual a cero:
+    \begin{equation}
+        \Sigma F_y = N_y - P_y = 0,
+        \label{eq: Normal_vertical}
+    \end{equation}
+    \begin{equation}
+        \Sigma F_y = N \cos \phi_{\text{normal}} - mg = 0.
+        \label{eq: Normal_vertical}
+    \end{equation}
+    
+    \item Movimiento circular en la componente horizontal \(x\):
+    
+    El bloque siempre quiere continuar una trayectoria rectilínea, pero la superficie se lo impide. Para que el radio \(r\) de la masa con velocidad tangencial \(v\) sea constante, la superficie debe ejercer una fuerza centrípeta \(\vec{F}_c = (0,m a_c)\), donde \(a_c = v^2/r\). La fuerza centrípeta es la componente horizontal de la fuerza normal:
+    \begin{equation}
+    \Sigma F_x = N_x = F_c.
+    \end{equation}
+    Por lo tanto se \textbf{debe} cumplir que
+    \begin{equation}
+    N \sin\phi_{\text{normal}} = \frac{mv^2}{r}.
+    \label{eq: Normal_horizontal}
+    \end{equation}
+\end{enumerate}
+
+\newpage
+
+\textbf{Tu Tarea:}
+\vspace{0.5cm}
+
+\textbf{Parte A:} Geometría del cono.
+
+\begin{enumerate}
+\item Dibuje un corte transversal del cono. En este dibujo, represente:
+\begin{itemize}
+    \item El vértice del cono.
+    \item El eje de simetría vertical.
+    \item Una generatriz del cono.
+    \item El semiángulo vertical \(\theta\).
+    \item La posición del bloque a una altura \(h\) desde el vértice.
+    \item El radio \(r\) de la trayectoria circular que describe el bloque a esa altura \(h\).
+\end{itemize}
+
+\item ¿Es cierto que \(\phi_{\text{normal}}=\theta\)?
+
+\item 
+Enfócate en el triángulo rectángulo formado por la altura \(h\), el radio \(r\) y la generatriz del cono. Utilizando trigonometría, encuentra una expresión para el radio \(r\) en función de \(h\) y \(\theta\) (es decir, \(r=r(h,\theta)\)).
+\end{enumerate}
+
+\textbf{Parte B:} Analizando el escenario físico.
+\vspace{0.5cm}
+
+Enfoquémonos en la velocidad \(v\) para que el bloque de masa \(m\) se mantiene girando a una altura constante \(h\) en el cono.
+
+\begin{enumerate}
+    \item ¿Crees que la velocidad para que gire establemente dependerá de la masa \(m\) del bloque? ¿dependerá de la altura \(h\)? ¿del ángulo \(\theta\)?
+
+    \item \textbf{Sim:} Fija la configuración de giro estable que encontraste antes. Cambia la altura \(h\) al doble, \(2h\). Intenta volver a encontrar una configuración estable. La velocidad \(v\) que necesita ¿es el doble de la velocidad original?
+
+    \item \textbf{Sim:} Ahora cambia la altura a \(4h\). La velocidad \(v\) que necesita ¿es el cuádruple de la velocidad original?
+\end{enumerate}
+
+Construiremos una expresión para esa velocidad \(v\), usando las ecuaciones \ref{eq: Normal_vertical} y \ref{eq: Normal_horizontal} dadas en el preámbulo, y tu resultado para \(r=r(h,\theta)\) de la Parte A.
+\begin{enumerate}
+    \item[3] Despeja la fuerza normal \(N\) de la ecuación \ref{eq: Normal_vertical}. Sustituye esta expresión de \(N\) en la ecuación \ref{eq: Normal_horizontal}.    
+    En la ecuación resultante, sustituye la expresión para el radio \(r=r(h,\theta)\).    
+    Finalmente, despeja la velocidad \(v\) en términos de \(g\), \(h\) y \(\theta\).
+
+    \item[4] Una vez con la velocidad necesaria $v(g,h,\theta)$, responde:
+
+    \begin{enumerate}
+        \item[4.1] Si el ángulo \(\theta\) del cono fuera muy pequeño, casi un cilindro, ¿qué pasaría con la velocidad necesaria según tu fórmula? ¿Tiene sentido?
+    
+        \item[4.2] Si el ángulo \(\theta\) fuera cercano a 90 grados (un cono muy abierto, casi un plano), ¿qué pasaría? (Considera \(\theta \to 90^\circ\)).
+    \end{enumerate}
+\end{enumerate}
+
+
+\subsection{Soluciones}
+
+\vspace{0.25cm}
+\textbf{Parte A:} Geometría del cono.
+\vspace{0.25cm}
+
+\subsubsection{1) Corte transversal del cono.}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{cono_transversal.png}
+    \caption{Corte transversal del cono 3D del escenario físico.}
+\end{figure}
+
+\subsubsection{2) Equivalencia \(\phi_{\text{normal}}=\theta\).}
+
+Para un cono, el ángulo \(\phi_{\text{normal}}\) que forma la superficie con la vertical es igual al semiángulo vertical del cono \(\theta\),  es decir, el ángulo entre la altura perpendicular del cono y cualquiera de sus generatrices.
+
+
+\subsubsection{3) Expresión \(r(h,\theta)\).}
+El semiángulo vertical del cono es \(\theta\).
+Por trigonometría:
+\[
+\tan\theta = \frac{r}{h}
+\]
+Por lo que el radio de la trayectoria circular se expresa como:
+\[
+r = h \tan\theta
+\]
+
+% La fuerza normal \(N\) es perpendicular a la superficie del cono. Si \(\theta\) es el semiángulo vertical del cono, entonces el ángulo que forma la fuerza normal \(N\) con la vertical también es \(\theta\). 
+
+% Descomponemos \(N\) en sus componentes vertical (\(N_y\)) y horizontal (\(N_x\)):
+%\begin{itemize}
+%    \item Componente vertical: \(N_y = N \cos\theta\) 
+%    \item Componente horizontal: \(N_x = N \sin\theta\) 
+%\end{itemize}
+
+\newpage
+
+\vspace{0.5cm}
+\textbf{Parte B:} Analizando el escenario físico.
+\vspace{0.25cm}
+
+\subsubsection{1) Intuición dependencias de \(v\).}
+
+Los alumnos analizarán el escenario intuitivamente. Es probable que surja la respuesta de que la velocidad \(v\) dependerá de la masa \(m\).
+
+\subsubsection{2) Exploración dependencia de \(h\).}
+
+Supongamos que, para el par \((\theta,h)\), tienen una velocidad \(v\). Si cambian \(h\rightarrow 2h\), solo necesitan una velocidad \(v\rightarrow \sqrt{2v}\approx 1.4 v\). Por lo que no se necesita el doble de la velocidad.
+
+\subsubsection{3) Exploración dependencia de \(h\).}
+
+Supongamos que, para el par \((\theta,h)\), tienen una velocidad \(v\). Si cambian \(h\rightarrow 4h\), solo necesitan una velocidad \(v\rightarrow \sqrt{4v}\approx 2 v\). Por lo que no se necesita el cuádruple de la velocidad.
+
+\subsubsection{4) Derivación \(v=v(\theta,h)\).}
+
+De la \ref{eq: Normal_vertical}, despejamos la fuerza normal \(N\):
+\[
+N = \frac{mg}{\cos\theta}
+\]
+Sustituimos esta expresión para \(N\) en la \ref{eq: Normal_horizontal}:
+\[
+\left(\frac{mg}{\cos\theta}\right) \sin\theta = m \frac{v^2}{r}
+\]
+Simplificamos:
+\[
+mg \frac{\sin\theta}{\cos\theta} = m \frac{v^2}{r} \Rightarrow mg \tan\theta = m \frac{v^2}{r}
+\]
+Cancelamos la masa \(m\):
+\[
+g \tan\theta = \frac{v^2}{r}
+\]
+Sustituimos la expresión para \(r = h \tan\theta\), obtenemos:
+\[
+g \tan\theta = \frac{v^2}{h \tan\theta}
+\]
+Despejamos \(v^2\):
+\[
+v^2 = g h \tan^2\theta
+\]
+Finalmente, tomamos la raíz cuadrada para obtener la velocidad \(v\):
+\[
+v = \tan\theta \sqrt{gh}.
+\]
+
+\subsubsection{5) Preguntas cierre}
+
+1) Si \(\theta \to 0\), \(\tan\theta \to 0\), entonces \(v \to 0\). Esto tiene sentido: un cilindro vertical no podría sostener un objeto en una órbita sin fricción a menos que el objeto no se mueva y esté en el fondo, o si la pared es horizontal, lo que no es el caso. Para \(\theta=0\) la superficie es vertical, la normal es horizontal y no puede equilibrar el peso.
+\vspace{0.75cm}
+
+2) Si \(\theta \to 90^\circ\), \(\tan\theta \to \infty\), entonces \(v \to \infty\). Esto también tiene sentido: para mantenerse a una altura \(h\) en una superficie casi plana, se necesitaría una velocidad extremadamente alta para que la pequeña componente vertical de una fuerza normal muy grande (inclinada casi horizontalmente) equilibre el peso.
+
+\newpage
+
+
+\chapter{Simulaciones Computacionales - Avanzado}
+
+\section{Sólido revolución 2: Calculando la velocidad en
+variadas pistas}
+
+Extendiendo el análisis del Problema 4, investigaremos la velocidad \(v\) requerida para que un objeto de masa \(m\) describa una trayectoria circular horizontal de radio \(r\) a una altura constante \(h\) en el interior de \textbf{diferentes superficies de revolución} lisas, entre ellas:
+\begin{enumerate}
+    \item[A)] Circunferencia en Rotación (Tazón Esférico)
+    \item[B)] Parábola en Rotación (Paraboloide)
+    \item[C)] Hipérbola en Rotación (Hiperboloide)
+    \item[D)] Elipse en Rotación (Elipsoide)
+\end{enumerate}
+
+Para la siguente actividad, considera;
+
+\begin{itemize}
+    \item \textbf{A) Parte Geométrica}
+
+    En el caso \textbf{anterior}, teníamos la relación geométrica clave
+    \[
+    \tan\theta = \frac{r}{h}
+    \]
+    \textbf{En este caso}, necesitaremos:
+    \begin{enumerate}
+        \item Encontrar la relación geométrica entre el radio \(r\) y la altura \(h\).
+        \item Determinar \(\tan(\phi)\) en función de la geometría de la superficie en el punto \((r,h)\). 
+        
+        El ángulo \(\phi\) que la normal forma con la vertical es tal que 
+        \[\tan(\phi) = \left|\frac{dr}{dh}\right|.\]
+    \end{enumerate}
+    Asumiremos que \(h\) se mide desde el punto más bajo de la superficie de revolución (vértice), y el eje de simetría es vertical.
+
+    \item \textbf{B) Parte Física: Leyes de Newton}
+    
+    Las ecuaciones de equilibrio de fuerzas y de movimiento circular son las mismas que en el Problema 4. Sea \(\phi\) el ángulo que forma la fuerza normal \(N\) (perpendicular a la superficie) con la vertical.
+    \begin{align*}
+    N \cos(\phi) &= mg \quad &(A) \\
+    N \sin(\phi) &= \frac{mv^2}{r} \quad &(B)
+    \end{align*}
+    Dividiendo (B) por (A), obtenemos:
+    \[
+    \tan(\phi) = \frac{v^2}{gr} \implies v^2 = gr \tan(\phi) \implies \boxed{v = \sqrt{gr \tan(\phi)}}
+    \]
+
+    \item \textbf{Tu Tarea}
+    
+    Repitiendo los pasos del problema anterior, para
+    \begin{enumerate}
+        \item[A)] Circunferencia en Rotación (Tazón Esférico)
+        \item[B)] Parábola en Rotación (Paraboloide)
+        \item[C)] Hipérbola en Rotación (Hiperboloide)
+        \item[D)] Elipse en Rotación (Elipsoide)
+    \end{enumerate}
+    desarrolle:
+    \begin{enumerate}
+        \item Despeja la velocidad \(v\) en términos de \(g\), \(h\) y \(\theta\).
+
+        \item Una vez con la velocidad necesaria $v(g,h,\theta)$, responde:
+
+        \begin{enumerate}
+            \item ¿Qué tipo de curva describe la trayectoria del bloque en el espacio tridimensional? 
+        
+            \item ¿De qué parámetros realmente depende la velocidad?.
+            \item Entregue casos reales en los que esta superficie es pertinente.
+        \end{enumerate}
+            
+    \end{enumerate}        
+\end{itemize}
+
+
+
+
+\subsection{A): Circunferencia en Rotación (Tazón Esférico)}
+Una circunferencia de radio de curvatura \(R_{\text{curv}}\) que rota alrededor de un diámetro vertical genera una esfera. Consideramos el movimiento en la \textbf{mitad inferior} de un tazón esférico de radio \(R_{\text{curv}}\), con el vértice en \(h=0\).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{esfera_3D_plot.png}
+    \caption{Visualización esfera 3D usando Plotly con Python.}
+    \label{fig:esfera_3D}
+\end{figure}
+
+\subsubsection{Parte Geométrica (con cálculo diferencial)}
+La ecuación de la circunferencia generatriz (en el plano \(rh\), con origen en el vértice inferior de la esfera) es 
+\[r^2 + (h-R_{\text{curv}})^2 = R_{\text{curv}}^2.\]
+Esto se simplifica a 
+\[r^2 = 2hR_{\text{curv}} - h^2.\]
+Entonces, el radio de la trayectoria circular es 
+\[r = \sqrt{2hR_{\text{curv}} - h^2}.\]
+Para encontrar \(\tan(\phi) = \left|\frac{dr}{dh}\right|\), diferenciamos \(r^2 = 2hR_{\text{curv}} - h^2\) respecto a \(h\):
+\[2r \frac{dr}{dh} = 2R_{\text{curv}} - 2h \implies \frac{dr}{dh} = \frac{R_{\text{curv}}-h}{r}.\]
+Como \(h < R_{\text{curv}}\) en la mitad inferior del tazón, \(R_{\text{curv}}-h > 0\). Si \(r>0\), entonces 
+\[\tan(\phi) = \frac{R_{\text{curv}}-h}{r}.\]
+
+\subsubsection{Parte Física}
+Reemplazamos este valor en nuestra expresión para la velocidad,
+\[
+v^2 = gr \tan(\phi) = gr \left(\frac{R_{\text{curv}}-h}{r}\right) = g(R_{\text{curv}}-h)
+\]
+\[
+\boxed{v = \sqrt{g(R_{\text{curv}}-h)}}
+\]
+
+\subsubsection{Respuestas}
+
+a) La curva que descrive es una circunferencia.
+
+b) La velocidad depende de \(R_{\text{curv}}\) y \(h\). Si \(h \to R_{\text{curv}}\) (el ecuador del tazón), \(v \to 0\). En este punto, la normal sería horizontal, lo que no permitiría equilibrio vertical (a menos que \(g=0\)). Esta fórmula es válida para \(h < R_{\text{curv}}\).
+
+c) \begin{itemize}
+    \item Una canica rodando en un tazón esférico de vidrio.
+    \item Curvas peraltadas en pistas de bobsleigh o velódromos que tienen secciones esféricas.
+\end{itemize}
+
+\subsection{B): Parábola en Rotación (Paraboloide)}
+Una parábola con vértice en el origen, \(r^2 = kh\) (donde \(k\) es una constante relacionada con la distancia focal \(p\) a la parábola \(x^2=4py\), y está dada por \(k=4p\)), que rota alrededor de su eje vertical.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{paraboloide_3D_plot.png}
+    \caption{Visualización paraboloide 3D usando Plotly con Python.}
+    \label{fig:paraboloide_3D}
+\end{figure}
+
+\subsubsection{Parte Geometría}
+Partimos de la ecuación \(r = \sqrt{kh}\).
+Para encontrar \(\tan(\phi) = \left|\frac{dr}{dh}\right|\), diferenciamos \(r^2 = kh\) respecto a \(h\):
+\[2r \frac{dr}{dh} = k \implies \frac{dr}{dh} = \frac{k}{2r}.\]
+Entonces, asumiendo \(k>0, r>0\), 
+\[\tan(\phi) = \frac{k}{2r}.\]
+
+\subsubsection{Parte Física}
+Reemplazamos en la expresión para la velocidad,
+\[
+v^2 = gr \tan(\phi) = gr \left(\frac{k}{2r}\right) = \frac{gk}{2}
+\]
+\[
+\boxed{v = \sqrt{\frac{gk}{2}}}
+\]
+
+\subsubsection{Respuestas}
+
+a) Una circunferencia.
+
+b) La velocidad requerida es constante, independiente de la altura \(h\) y del radio \(r\). Esto significa que si un objeto se mueve a esta velocidad específica, puede mantener una órbita circular a cualquier altura en el paraboloide.
+
+c) \begin{itemize}
+    \item La superficie de un líquido en un recipiente que rota a velocidad angular constante toma forma de paraboloide. Los telescopios de espejo líquido utilizan este principio.
+    \item Algunas antenas parabólicas o reflectores solares podrían servir de ``pista'' si fueran lisos.
+\end{itemize}
+
+\subsection{C) Hipérbola en Rotación (Hiperboloide)}
+Consideramos una hipérbola \(\frac{r^2}{a^2} - \frac{h^2}{b^2} = 1\) rotando alrededor del eje \(h\) (su eje conjugado). Aquí, \(a\) es el radio mínimo (su garganta) en \(h=0\). El vértice para \(h\) es \(h=0\).
+
+\subsubsection{Parte Geometría}
+
+De la ecuación de la hipérbola, despejamos $r^2$. 
+\[r^2 = a^2 \left(1 + \frac{h^2}{b^2}\right) = \frac{a^2}{b^2}(b^2 + h^2).\]
+Para encontrar \(\tan(\phi) = \left|\frac{dr}{dh}\right|\), diferenciamos \(r^2 = \frac{a^2}{b^2}(b^2 + h^2)\) respecto a \(h\):
+\[2r \frac{dr}{dh} = \frac{a^2}{b^2}(2h) \implies \frac{dr}{dh} = \frac{a^2 h}{b^2 r}\].
+Entonces, para \(h \ge 0\), 
+\[\tan(\phi) = \left|\frac{a^2 h}{b^2 r}\right|.\]
+
+\subsubsection{Parte Física}
+Reemplazamos en la expresión de velocidad:
+\[
+v^2 = gr \tan(\phi) = gr \left(\frac{a^2 h}{b^2 r}\right) = \frac{g a^2 h}{b^2}
+\]
+\[
+\boxed{v = \frac{a}{b} \sqrt{gh}}
+\]
+
+\subsubsection{Respuestas}
+
+a) Una circunferencia
+
+b) La velocidad sí depende de la altura $h$ a la que esté la bola. Además, las características geométricas de la hipérbola son fundamentales: el parámetro $a$ es lineal con la velocidad, y el parámetro $b$ es inverso con la velocidad.
+
+c)
+\begin{itemize}
+    \item Las torres de enfriamiento de las centrales nucleares a menudo tienen forma de hiperboloide de una hoja por sus propiedades estructurales y de flujo de aire.
+    \item Algunas esculturas o elementos arquitectónicos modernos.
+\end{itemize}
+
+\subsection{D) Elipse en Rotación (Elipsoide)}
+Consideramos una elipse \(\frac{r^2}{a_e^2} + \frac{(h-b_e)^2}{b_e^2} = 1\) rotando alrededor de su eje vertical. Aquí, \(a_e\) es el semieje horizontal (radio en el ecuador para un esferoide oblato o radio máximo si \(b_e > a_e\)), y \(b_e\) es el semieje vertical. El centro de la elipse está en \((0,b_e)\) y el vértice inferior en \((0,0)\) en el plano \(rh\), por lo que \(0 \le h \le 2b_e\).
+
+\subsubsection{Parte Geometría}
+La ecuación, una vez despejada $V^2$ y simplificando,  es 
+\[r^2 = \frac{a_e^2}{b_e^2} (2hb_e - h^2).\]
+
+Para encontrar \(\tan(\phi) = \left|\frac{dr}{dh}\right|\), diferenciamos \(r^2 = \frac{a_e^2}{b_e^2} (2hb_e - h^2)\) respecto a \(h\):
+\[2r \frac{dr}{dh} = \frac{a_e^2}{b_e^2} (2b_e - 2h) \implies \frac{dr}{dh} = \frac{a_e^2(b_e-h)}{b_e^2 r}.\]
+Entonces, para \(h < b_e\) (mitad inferior), \(b_e-h > 0\),
+\[\tan(\phi) = \left|\frac{a_e^2(b_e-h)}{b_e^2 r}\right|.\]
+
+\subsubsection{Parte Física}
+Reemplazamos en la expresión de la velocidad,
+\[
+v^2 = gr \tan(\phi) = gr \left(\frac{a_e^2(b_e-h)}{b_e^2 r}\right) = \frac{g a_e^2 (b_e-h)}{b_e^2}
+\]
+\[
+\boxed{v = \frac{a_e}{b_e} \sqrt{g(b_e-h)}}
+\]
+
+\subsubsection{Respuestas}
+
+a) Una circunferencia.
+
+b) Si \(a_e=b_e=R_{\text{curv}}\), el elipsoide es una esfera. La fórmula se convierte en \(v = \frac{R_{\text{curv}}}{R_{\text{curv}}} \sqrt{g(R_{\text{curv}}-h)} = \sqrt{g(R_{\text{curv}}-h)}\), que coincide nuestra respuesta anterior.
+
+c)
+\begin{itemize}
+    \item Un tazón con forma de ``lenteja'' (esferoide oblato si \(a_e>b_e\)).
+    \item Las cúpulas de algunos edificios o tanques de almacenamiento pueden ser elipsoidales.
+\end{itemize}
+
+
+\newpage
+
+\end{document}

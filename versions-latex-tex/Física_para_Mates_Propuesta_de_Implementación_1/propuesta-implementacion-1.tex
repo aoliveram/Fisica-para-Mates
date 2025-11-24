@@ -1,0 +1,461 @@
+\documentclass[12pt, a4paper]{report}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{array}
+\usepackage{float} % For H option in figure/table
+\usepackage{siunitx} % For units
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{soul}
+\usepackage{rotating} % Para texto vertical en cabeceras de tabla
+\usepackage{multicol} % Para la leyenda
+\usepackage{booktabs} % Para líneas más estéticas en la tabla
+\usepackage{hyperref}
+\usepackage{xcolor}
+% Compilar con: lualatex -shell-escape o xelatex -shell-escape
+\usepackage{listings}
+
+\lstdefinestyle{mypython}{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  numbers=left, numbersep=6pt,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+  keywordstyle=\bfseries\color{blue!60!black},
+  stringstyle=\color{green!40!black},
+  commentstyle=\itshape\color{black!50},
+  frame=single,
+  rulecolor=\color{black!20}
+}
+
+\geometry{a4paper, margin=2cm} % Ajuste para tabla ancha y modo paisaje
+
+\setcounter{tocdepth}{1} % Define la profundidad del índice
+\renewcommand{\familydefault}{\sfdefault} % Sans-serif
+
+% Comandos para texto vertical en cabeceras de tabla
+\newcommand{\rockbottom}[1]{\rotatebox{90}{\parbox{2.8cm}{\raggedright #1}}}
+\newcommand{\rockbottomshort}[1]{\rotatebox{90}{\parbox{2.2cm}{\raggedright #1}}}
+\newcommand{\rockbottomtiny}[1]{\rotatebox{90}{\parbox{1.8cm}{\raggedright #1}}}
+\newcommand{\rockbottomsupertiny}[1]{\rotatebox{90}{\parbox{1.5cm}{\raggedright #1}}}
+
+\geometry{margin=1in}
+
+\title{\textbf{Física para Mates \\
+Implementación piloto}}
+\author{Aníbal Olivera M.}
+\date{Noviembre 2025}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+%======================================================================
+\chapter{Contexto y objetivos generales}
+%======================================================================
+
+\section{Contexto}
+
+La presente propuesta describe una implementación piloto factible del proyecto \textit{Física para Mates} en los cursos de Geometría y Taller de Física I del Plan Común de Ingeniería UDD.
+
+La implementación:
+
+\begin{itemize}
+\item utiliza problemas ya diseñados y acompañados de simulaciones computacionales;
+\item se integra a la estructura de evaluación existente sin modificar las ponderaciones globales;
+\item incorpora mediciones pre–post de motivación y estrategias de aprendizaje;
+\item requiere infraestructura ya disponible en la universidad (salas de computación) y un esfuerzo acotado de coordinación entre las cátedras de Matemática y Física.
+\end{itemize}
+
+Este documento está pensado para ser leído por académicos y autoridades que no han participado en la discusión previa, por lo que se explicitan los objetivos, la estructura de las sesiones, la articulación con la malla y el sistema de evaluación.
+
+En una primera etapa, el proyecto se ha concretado en el diseño de una serie de problemas aplicados acompañados de simulaciones computacionales interactivas. Estos problemas ya se encuentran detallados en el documento \textit{Física\_para\_Mates\_AO\_v2.pdf}, y tienen en común 1) hacer uso de conceptos de Física mínimos —cinemática y ecuación de la trayectoria— y 2) ser no triviales en su desarrollo, enfatizando el rol de las simulaciones como 'bombas de intuición'.
+
+En este informe se propone una implementación piloto de dichos problemas en dos asignaturas del Plan Común: \textbf{Geometría} (bimestre 2, con clases diarias de 70 minutos) y \textbf{Taller de Física I} (semestre 2, con 3 clases semanales de 70 minutos más una ayudantía).
+
+Dependiendo de la evaluación de esta primera experiencia, el proyecto puede escalarse en cursos posteriores (por ejemplo, Introducción al Cálculo y Cálculo Diferencial), incorporando nuevos problemas y ampliando el uso de simulaciones en la formación básica de los estudiantes de Ingeniería.
+
+\section{Objetivos generales del proyecto}
+
+\begin{enumerate}
+  \item Conectar explícitamente contenidos de Matemática (Geometría, trigonometría, ecuaciones, funciones) con escenarios de problemas de Física estándar, aunque revisitados y visto desde nuevas ópticas.
+  \item Integrar \textbf{simulaciones computacionales} como herramienta de exploración (bombas de intuición), modelación y verificación de resultados matemáticos.
+  \item Desarrollar habilidades de resolución de \textbf{problemas no triviales}, donde los estudiantes deban interpretar, modelar y analizar situaciones con parámetros múltiples.
+  \item \textbf{Evaluar el impacto} de esta intervención en variables de motivación y estrategias de aprendizaje mediante un cuestionario estandarizado aplicado en modalidad pre--post.
+\end{enumerate}
+
+\section{Objetivos específicos de la implementación piloto}
+
+\begin{itemize}
+  \item Implementar un conjunto acotado de sesiones de trabajo en grupos de tres estudiantes, utilizando simulaciones computacionales en salas de computadores de la universidad.
+  \item Integrar estas sesiones dentro de la estructura de evaluación de los cursos de Geometría y Taller de Física I, sin alterar sus ponderaciones globales.
+  \item Recoger datos de desempeño (productos escritos, mini--evaluaciones) y datos de percepción y motivación mediante un cuestionario tipo MSLQ adaptado a estudiantes de ingeniería de primer año.
+\end{itemize}
+
+\section{Resumen de problemas disponibles}
+
+\vspace{0.5cm}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcccccccccccc@{}}
+\toprule
+ & \multicolumn{5}{c}{\textbf{Contenidos Matemáticos}} & \multicolumn{3}{c}{\textbf{Contenidos Físicos}} & \multicolumn{3}{c}{\textbf{Tipo de Problema}} & \multicolumn{1}{c}{\textbf{Asignatura}} \\
+\cmidrule(lr){2-6} \cmidrule(lr){7-9} \cmidrule(lr){10-12} \cmidrule(lr){13-13}
+\textbf{Problema} &
+\rockbottomtiny{Trigonometría} &
+\rockbottomtiny{Vectores} &
+\rockbottomtiny{Geom. Analítica} &
+\rockbottomtiny{Logaritmos} &
+\rockbottomtiny{Cálc. Diferen.} &
+\rockbottomtiny{Cinemática} &
+\rockbottomtiny{Leyes Newton} &
+\rockbottomtiny{Estática /Equilibrio} &
+\rockbottomsupertiny{Hoja Cálculo} &
+\rockbottomsupertiny{Prob. Pizarra} &
+\rockbottomsupertiny{Simul. 3D} &
+\rockbottomshort{Sugerida} \\
+\midrule
+Cinemática 1 (4.1)   &   &   & X &   &   & X &   &   &   & X & X & 1 \\
+Balística 1 (4.2)    & X & X & X &   &   & X &   &   &   & X & X & 1 \\
+Balística 2 (4.3)    & X & X & X &   &   & X &   &   &   & X & X & 1 \\
+Balística 3 (4.4)    &   & X & X &   &   & X &   &   &   & X & X & 1 \\
+Sólido Rev. 1 (4.5)  & X & X & X &   &   & X & X & X &   & X & X & 1 \\
+\midrule
+Sólido Rev. 2 (5.1)  &   & X & X &   & X & X & X & X &   &   & X & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+\noindent\textbf{Asignatura sugerida:}
+\begin{itemize}
+  \item[1:] Geometría
+  \item[2:] Taller de Física I (en articulación con Introducción al Cálculo)
+  \item[3:] Cálculo Diferencial
+  \item[4:] Cálculo Integral
+\end{itemize}
+
+En este documento nos centraremos en los problemas 4.1--4.5 y 5.1, articulados entre Geometría y Taller de Física I.
+
+%======================================================================
+\chapter{Diseño general de la implementación}
+%======================================================================
+
+\section{Cursos involucrados y carga horaria}
+
+\subsection*{Geometría}
+
+\begin{itemize}
+  \item Curso del de primer año, entre mediados de Mayo y principio de Julio.
+  \item Clases de 70 minutos, de lunes a viernes, durante 10 semanas.
+  \item Para esta propuesta se utilizarán sesiones de 140 minutos, agendadas en las \textbf{últimas semanas} del bimestre.
+\end{itemize}
+
+\subsection*{Taller de Física I}
+
+\begin{itemize}
+  \item Curso de primer año, articulado con Introducción al Cálculo.
+  \item Clases de 70 minutos, 3 veces por semana + 1 ayudantía.
+  \item Para esta propuesta se utilizarán sesiones de 140 minutos, agendadas en las \textbf{primeras semanas} del semestre en que se dicta el Taller (inmediatamente después de Geometría).
+\end{itemize}
+
+\subsection*{Estructura G / F}
+
+Definiremos como sesiones de \textbf{140 minutos obligatorias}:
+
+\begin{itemize}
+  \item \textbf{Gk}: sesiones realizadas en \textbf{Geometría} (ej.: G1, G2, G3, G4).
+  \item \textbf{Fk}: sesiones realizadas en \textbf{Taller de Física I} (ej.: F1, F2, F3).
+\end{itemize}
+
+%–––––––––––––––––––––––––––––––––––
+\section{Esquema versiones de implementación}
+%–––––––––––––––––––––––––––––––––––
+
+Se proponen dos versiones de implementación, con distinta intensidad, que utilizan la misma infraestructura y estructura de sesión. Esto es un esquema de ambas versiones —versión mínima y versión completa.
+
+\subsection{Versión mínima (4 sesiones)}
+
+Pensada como piloto de baja carga, con dos sesiones en Geometría y una en Física.
+
+\begin{itemize}
+\item G1:
+\begin{itemize}
+\item Aplicación de cuestionario de motivación y estrategias de estudio \textbf{(pre–test)}.
+\item Problema \textbf{Cinemática 1: frenada de emergencia}.
+\item Mini–evaluación individual.
+\end{itemize}
+\item G2:
+\begin{itemize}
+\item Problema \textbf{Balística 2: el desafío del arquero}.
+\item Mini–evaluación individual.
+\end{itemize}
+\item G3:
+\begin{itemize}
+\item Problema \textbf{Balística 3: la bola en la escalera}.
+\item Mini–evaluación individual.
+\end{itemize}
+\item F1:
+\begin{itemize}
+\item Breve repaso de proyectiles y conexión con las sesiones de Geometría.
+\item Problema \textbf{Sólido de revolución 1 (cono)}.
+\item Mini–evaluación individual.
+\item Aplicación de cuestionario \textbf{(post–test)}.
+\end{itemize}
+\end{itemize}
+
+\subsection{Versión completa (7 sesiones)}
+
+Versión extendida, con todos los problemas disponibles y una sesión de cierre.
+
+\begin{itemize}
+\item G1:
+\begin{itemize}
+\item Cuestionario pre–test.
+\item \textbf{Cinemática 1}.
+\item Mini–evaluación individual.
+\end{itemize}
+\item G2:
+\begin{itemize}
+\item \textbf{Balística 1: rescate de la pelota}.
+\item Mini–evaluación individual.
+\end{itemize}
+\item G3:
+\begin{itemize}
+\item \textbf{Balística 2: desafío del arquero}.
+\item Mini–evaluación individual.
+\end{itemize}
+\item G4:
+\begin{itemize}
+\item \textbf{Balística 3: bola en la escalera}.
+\item Mini–evaluación individual.
+\end{itemize}
+\item F1:
+\begin{itemize}
+\item Conexión entre proyectiles y movimiento circular.
+\item \textbf{Sólido de revolución 1 (cono)}.
+\item Mini–evaluación individual.
+\end{itemize}
+\item F2:
+\begin{itemize}
+\item \textbf{Sólido de revolución 2}: superficies de revolución (paraboloide, esfera, hiperbola, elipse).
+\item Mini–evaluación individual.
+\end{itemize}
+\item F3:
+\begin{itemize}
+\item Cierre del proyecto: revisión integradora de todos los problemas.
+\item Mini–evaluación integradora.
+\item Cuestionario post–test.
+\end{itemize}
+\end{itemize}
+
+%======================================================================
+\chapter{Estructura de una sesión tipo}
+%======================================================================
+
+Todas las sesiones especiales se imparten como \textbf{clases dobles de 140 minutos}, con estudiantes trabajando en grupos de tres, cada grupo con acceso a un computador con conexión a las simulaciones.
+
+A continuación se describen las fases de una sesión tipo Gk/Fk (exceptuando las partes de pre/post–test, que se detallan más adelante):
+
+\section{Fases de la sesión}
+
+\begin{enumerate}
+\item \textbf{Introducción y contexto (15–20 min)}
+El profesor presenta brevemente el contexto físico y el objetivo matemático del problema. Se explican las reglas de trabajo en grupo y los productos que se esperan: \textit{hoja de desarrollo} y mini–evaluación individual.
+
+\item \textbf{Exploración inicial con simulación (10–15 min)}
+Los estudiantes exploran libremente la simulación asociada al problema, modificando parámetros y observando comportamientos cualitativos. El objetivo es familiarizarse con el sistema y generar hipótesis (por ejemplo, parámetros para evitar una colisión, combinaciones de ángulo y velocidad que permiten pasar por dos anillos, etc.).
+
+\item \textbf{Desarrollo de actividades (50–65 min)}
+Esta es la fase central de la sesión. Los grupos desarrollan, sobre la base de una guía impresa o digital, una serie de actividades que combinan:
+\begin{itemize}
+\item formulación de ecuaciones (de posición, trayectorias, condiciones de impacto);
+\item manipulación algebraica y trigonométrica;
+\item resolución de inecuaciones y análisis de discriminantes;
+\item comparación de resultados analíticos con la simulación.
+\end{itemize}
+Las respuestas y procedimientos se registran en la \textbf{hoja de desarrollo grupal}, que se entrega al final de la sesión.
+
+\item \textbf{Verificación y cierre grupal (10–15 min)}
+El profesor conduce una discusión rápida donde se contrastan los resultados de los grupos con las predicciones teóricas y con la simulación. Esta fase suele corresponder a los numerales finales de cada guía (interpretación de la condición de seguridad en cinemática, descripción de la región de soluciones en balística, análisis de cómo cambia el peldaño de impacto con la velocidad inicial, comparación entre distintas superficies de revolución, etc.).
+
+\item \textbf{Mini–evaluación individual (15–20 min)}
+Cada estudiante responde un breve cuestionario individual (3–5 ítems) relacionado con el problema trabajado. La mini–evaluación puede incluir:
+\begin{itemize}
+\item un ejercicio numérico directo;
+\item una pregunta conceptual sobre el modelo;
+\item una pregunta de interpretación gráfica o de parámetros.
+\end{itemize}
+Esta mini–evaluación se corrige individualmente y forma parte de la nota de la sesión.
+\end{enumerate}
+
+\section{Distribución de tiempos}
+
+En términos de minutos, una sesión tipo se puede esquematizar como:
+
+\begin{center}
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Fase} & \textbf{Tiempo estimado} \\
+\midrule
+Introducción y contexto & 15–20 min \\
+Exploración con simulación & 10–15 min \\
+Desarrollo de actividades & 50–65 min \\
+Verificación y cierre grupal & 10–15 min \\
+Mini–evaluación individual & 15–20 min \\
+\midrule
+\textbf{Total} & \textbf{100 - 135 min} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%======================================================================
+\chapter{Evaluación y articulación con la nota de curso}
+%======================================================================
+
+\section{Productos evaluados en cada sesión}
+
+Cada sesión Gk o Fk genera dos productos evaluados:
+
+\begin{enumerate}
+\item \textbf{Hoja de desarrollo grupal (50\% de la sesión)} 
+\begin{itemize}
+\item Elaborada en grupos de tres estudiantes.
+\item Contiene el desarrollo completo de las actividades de la guía correspondiente.
+\item Se evalúa mediante una rúbrica simple (corrección matemática, claridad de procedimientos, interpretación de resultados).
+\end{itemize}
+
+\item \textbf{Mini–evaluación individual (50\% de la sesión)}
+\begin{itemize}
+\item $\sim$5 ítems cortos relacionados a los ejercicios de la sesión.
+\item Garantiza responsabilidad individual dentro del trabajo grupal.
+\end{itemize}
+\end{enumerate}
+
+La nota de la sesión es el promedio de ambos entregables.
+
+\section{Integración en Geometría}
+
+La ponderación oficial de Geometría contempla:
+
+\begin{center}
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Prueba} & \textbf{Ponderación} \\
+\midrule
+Certamen N$^\circ$1 & 35\% \\
+Certamen N$^\circ$2 & 35\% \\
+Controles & 20\% \\
+Tareas & 10\% \\
+\midrule
+Nota de presentación & 70\% \\
+Examen & 30\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+En esta propuesta, la nota de \textbf{Tareas (10\%)} se reemplaza por el promedio de las notas de sesiones G\_k. No se modifica la ponderación global del curso, sólo se redefine el contenido de la categoría ``Tareas’’.
+
+\section{Integración en Taller de Física I}
+
+La ponderación oficial de Taller de Física I contempla:
+
+\begin{center}
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Prueba} & \textbf{Ponderación} \\
+\midrule
+Certamen N$^\circ$1 & 30\% \\
+Certamen N$^\circ$2 & 30\% \\
+Controles & 25\% \\
+Laboratorios & 15\% \\
+\midrule
+Nota de presentación & 70\% \\
+Examen & 30\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+En esta propuesta, el proyecto \textit{Física para Mates} se integra dentro de la categoría \textbf{Laboratorios (15\%)}, donde cada sesión F\_k reemplaza 5 puntos de esa categoría. En este sentido, la sección Laboratorio estaría compuesto por:
+\begin{itemize}
+    \item F\_1 (5\%) y Laboratorio usual (10\&).
+    \item F\_1-F\_2-F\_3 (15\%) y Laboratorio usual (0\&).
+\end{itemize}
+
+%======================================================================
+\chapter{Medición de motivación y estrategias de aprendizaje}
+%======================================================================
+
+\section{Instrumento}
+
+Para medir el impacto de la intervención en variables de motivación y estrategias de aprendizaje, se utilizará una versión adaptada del cuestionario \textbf{MSLQ} (Motivated Strategies for Learning Questionnaire), validado en estudiantes universitarios chilenos de primer año.
+
+Este cuestionario evalúa dimensiones como:
+
+\begin{itemize}
+\item Valoración de la tarea.
+\item Expectativas de logro y autoeficacia.
+\item Ansiedad ante la evaluación.
+\item Organización y planificación.
+\item Estrategias de aprendizaje (resumen, elaboración, pensamiento crítico).
+\item Manejo del tiempo y ambiente de estudio.
+\item Búsqueda de ayuda.
+\end{itemize}
+
+En su versión completa, el instrumento contiene alrededor de 80 ítems tipo Likert. Para efectos de esta implementación piloto se sugiere considerar:
+
+\begin{itemize}
+\item Usar el cuestionario completo, destinando aproximadamente \textbf{15–20 minutos} de clase.
+\item Alternativamente, diseñar una \textbf{versión abreviada} centrada en los factores más relevantes (por ejemplo, autoeficacia, valor de la tarea y ansiedad), reduciendo el tiempo de aplicación.
+\end{itemize}
+
+\section{Aplicación pre–post}
+
+\subsection*{Versión mínima}
+
+\begin{itemize}
+\item \textbf{Pre–test}: al inicio de la sesión G1 (primeros 15–20 minutos).
+\item \textbf{Post–test}: al final de la sesión F1 (últimos 15–20 minutos).
+\end{itemize}
+
+\subsection*{Versión completa}
+
+\begin{itemize}
+\item \textbf{Pre–test}: al inicio de la sesión G1.
+\item \textbf{Post–test}: durante la sesión F3 (parte inicial o final), en conjunto con la mini–evaluación integradora.
+\end{itemize}
+
+Los resultados del cuestionario no afectan la nota de los estudiantes en ningún caso. Esta información se utilizará para monitorear cambios en la \textbf{motivación} y \textbf{estrategias de estudio} frente al uso de simulaciones y problemas contextualizados; y alimentar investigaciones posteriores sobre enseñanza de Matemática y Física en Ingeniería.
+
+%======================================================================
+\chapter{Requerimientos logísticos}
+%======================================================================
+
+\section{Infraestructura}
+
+\begin{itemize}
+\item \textbf{Salas de computación}:
+\begin{itemize}
+\item Capacidad para al menos 14 computadores por sección (grupos de tres estudiantes, hasta 40 estudiantes por curso).
+\item Conexión a Internet estable para acceder a las simulaciones alojadas en un servidor externo.
+\end{itemize}
+\item \textbf{Software}: navegador web actualizado; no se requiere instalación de software adicional en los equipos de los estudiantes dado que las simulaciones estarán sincronizadas en un Cloud de Computación.
+\item \textbf{Materiales impresos}: guías de actividades y hojas de desarrollo por sesión; copias del cuestionario pre–post.
+\item \textbf{Profesor del curso}: responsable de la conducción de la sesión, explicación de objetivos y discusión final.
+\item Los estudiantes trabajarán en \textbf{grupos de tres}.
+\item Cada grupo tendrá asignado un computador durante la sesión.
+\item Las sesiones Gk y Fk serán anunciadas como \textbf{actividades obligatorias} y parte integrante de la evaluación de Tareas/Laboratorios del curso.
+\end{itemize}
+
+\vspace{1cm}
+
+\end{document}
