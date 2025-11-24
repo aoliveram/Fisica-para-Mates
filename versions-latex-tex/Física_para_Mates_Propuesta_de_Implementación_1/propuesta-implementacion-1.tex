@@ -522,6 +522,90 @@ calcula la altura al pasar por \(x = x_c\).
 y por qué no cambia la región de soluciones respecto al caso de un solo anillo.
 \end{enumerate}
 
+%--------------------------------------------------
+\section{Balística 3 — La bola en la escalera}
+%--------------------------------------------------
+
+\begin{enumerate}
+\item Usando que el movimiento es horizontal con rapidez constante, escribe la ecuación \(x(t) = v_0 t\) y deduce el tiempo en que la bola alcanza el borde horizontal del escalón \(n\), ubicado en \(x_n = n w\).
+
+\item Usando la ecuación vertical \(y(t) = -\tfrac12 g t^2\) y la expresión del tiempo obtenida en el ítem anterior, escribe la altura \(y_n\) de la bola al llegar a la posición \(x_n = n w\).
+
+\item Explica la condición que debe cumplir \(y_n\) para que la bola impacte el escalón \(n\) y no el escalón anterior. Es decir, expresa una condición del tipo “la bola llega entre la parte superior del escalón \(n\) y la parte superior del escalón \(n-1\)”.
+
+\item Recordando que, en el desarrollo de la guía, se obtuvo que el número de escalón de impacto viene dado por
+\[
+  n = \left\lceil \frac{2 h v_0^2}{g w^2} \right\rceil,
+\]
+ discute qué ocurre con \(n\) si se reemplaza \(v_0\) por \(2 v_0\), manteniendo fijos \(h, g\) y \(w\).
+
+\item Usando la expresión
+\[
+  n = \left\lceil \frac{2 h v_0^2}{g w^2} \right\rceil,
+\]
+ discute el efecto de aumentar \(w\) o de aumentar \(h\) (manteniendo \(v_0\) fijo) sobre el número de escalón de impacto. ¿Qué cambio produce cada modificación sobre \(n\)?
+\end{enumerate}
+
+%--------------------------------------------------
+\section{Sólido de Revolución 1 — Cono}
+%--------------------------------------------------
+
+\begin{enumerate}
+\item Para un cono recto cuyo eje es vertical y cuyo ángulo con la vertical es \(\theta\), muestra que la distancia radial al eje a una altura \(h\) cumple
+\[
+  r(h) = h \tan\theta.
+\]
+
+\item Considera una masa que describe un movimiento circular uniforme de radio \(r\) en el interior del cono. A partir de las proyecciones de fuerzas (peso y normal), muestra que la condición de giro estable viene dada por
+\[
+  \frac{v^2}{r} = g \tan\theta.
+\]
+
+\item Usando las expresiones anteriores, reemplaza \(r(h) = h \tan\theta\) en la condición de giro estable y obtiene una expresión explícita para \(v(h)\).
+
+\item Compara las velocidades de giro \(v(h_1)\) y \(v(h_2)\) para dos alturas tales que \(0 < h_1 < h_2\). ¿Qué implicancia tiene esto sobre cómo cambia la velocidad requerida para un giro estable al aumentar la altura en el cono?
+
+\item Considera ahora dos conos con ángulos \(\theta_1 < \theta_2\). Para una misma altura \(h\), usa la expresión de \(v(h)\) para decidir en cuál de los dos conos se requiere una mayor velocidad de giro para mantener la órbita estable.
+
+\item Analiza el límite de la expresión \(v(h) = \tan\theta \, \sqrt{g h}\) cuando \(\theta \to 0\). ¿Qué ocurre con la velocidad de giro estable en ese límite y qué interpretación física tiene este resultado?
+\end{enumerate}
+
+%--------------------------------------------------
+\section{Sólido de Revolución 2 — Superficies generales}
+%--------------------------------------------------
+
+\begin{enumerate}
+\item Explica por qué, para una superficie de revolución descrita por \(r(h)\), el ángulo local \(\varphi\) entre la superficie y la horizontal cumple
+\[
+  \tan\varphi = \left|\frac{dr}{dh}\right|.
+\]
+Interpreta geométricamente esta relación en términos de la pendiente de la curva meridiana \(r(h)\).
+
+\item Usando las expresiones generales
+\[
+  \frac{v^2}{r} = g \tan\varphi, \qquad \tan\varphi = \left|\frac{dr}{dh}\right|,
+\]
+ muestra que la velocidad de giro estable satisface, en general,
+\[
+  v^2(h) = g\, r(h) \, \left|\frac{dr}{dh}\right|.
+\]
+
+\item Considera ahora dos superficies de revolución:
+\begin{itemize}
+  \item Superficie A (cono): \(r(h) = k h\);
+  \item Superficie B (cuadrática simple): \(r(h) = k h^2\),
+\end{itemize}
+con \(k>0\). Calcula \(v(h)\) en cada caso usando la expresión general del ítem anterior y compara cómo crece la velocidad de giro requerida con la altura en ambas superficies.
+
+\item Discute, en términos de la fórmula general \(v^2(h) = g\, r(h)\, \left|dr/dh\right|\), por qué en superficies donde \(r(h)\) y \(\left|dr/dh\right|\) crecen rápidamente con la altura, la velocidad requerida para el giro estable aumenta de manera marcada al subir en la superficie.
+
+\item Considera la superficie de revolución paraboloidal definida por
+\[
+  r(h) = k \sqrt{h},
+\]
+con \(k>0\). Calcula \(\frac{dr}{dh}\) y luego usa la fórmula general \(v^2(h) = g\, r(h)\, \left|dr/dh\right|\) para mostrar que la velocidad de giro estable \(v(h)\) no depende de la altura. Explica por qué, en este sentido, esta superficie puede considerarse aproximadamente isócrona.
+\end{enumerate}
+
 % End of inserted chapter
 
 \end{document}
