@@ -15,6 +15,17 @@
 \usepackage{xcolor}
 % Compilar con: lualatex -shell-escape o xelatex -shell-escape
 \usepackage{listings}
+\usepackage{tcolorbox}
+\newtcolorbox{solutionbox}{
+    colback=gray!5!white,
+    colframe=gray!75!black,
+    title=\textbf{Solución esperada},
+    fonttitle=\bfseries,
+    coltitle=white,
+    arc=2mm,
+    boxrule=0.5mm
+}
+
 
 \lstdefinestyle{mypython}{
   language=Python,
@@ -471,15 +482,36 @@ Este capítulo recoge los ítems propuestos para las mini–evaluaciones. Cada c
 \begin{enumerate}
 \item El auto A viaja a \(v_A = 30\,\text{m/s}\) y el auto B a \(v_B = 20\,\text{m/s}\). La distancia inicial es \(D = 40\,\text{m}\) y la aceleración de frenado es \(a = 3\,\text{m/s}^2\). Usando la condición de seguridad \((v_A - v_B)^2 < 2aD\), determina si habrá colisión.
 
+\begin{solutionbox}
+se calcula \(\Delta v = v_A - v_B = 10\,\text{m/s}\) y \((\Delta v)^2 = 100\). Luego se evalúa \(2 a D = 2 \cdot 3 \cdot 40 = 240\). Como \(100 < 240\), se cumple la condición de seguridad y no hay colisión.
+\end{solutionbox}
+
 \item Dos autos se mueven con \(v_A = 27\,\text{m/s}\) y \(v_B = 18\,\text{m/s}\), separados por \(D = 35\,\text{m}\). Encuentra la aceleración mínima \(a_{\min}\) que asegura que no haya colisión.
+
+\begin{solutionbox}
+se usa la frontera \((v_A - v_B)^2 = 2 a_{\min} D\). Con \(\Delta v = 9\,\text{m/s}\), se tiene \(81 = 2 a_{\min} \cdot 35\). De aquí, \(a_{\min} = 81 / 70\,\text{m/s}^2\).
+\end{solutionbox}
 
 \item Con \(v_A = 32\,\text{m/s}\), \(v_B = 24\,\text{m/s}\) y aceleración \(a = 4\,\text{m/s}^2\):  
 (a) Calcula la distancia mínima \(D_{\min}\).  
 (b) Evalúa si la situación es segura cuando \(D = 20\,\text{m}\).
 
+\begin{solutionbox}
+(a) se calcula \(\Delta v = 8\,\text{m/s}\) y se usa \((\Delta v)^2 = 2 a D_{\min}\), de modo que \(64 = 2 \cdot 4 \cdot D_{\min}\) y \(D_{\min} = 8\,\text{m}\). (b) se compara \(D = 20\,\text{m}\) con \(D_{\min}\): como \(20 > 8\), la situación es segura.
+\end{solutionbox}
+
 \item Recordando que en la simulación trabajaste en el plano \((D, \Delta v)\), donde la frontera está dada por \(\Delta v = \sqrt{2aD}\), indica si la región segura se encuentra por encima o por debajo de la curva. Justifica usando la desigualdad de seguridad.
 
+\begin{solutionbox}
+la frontera viene dada por la igualdad \((\Delta v)^2 = 2 a D\). La condición de seguridad es \((\Delta v)^2 < 2 a D\), es decir, \(\Delta v < \sqrt{2 a D}\). Por tanto, la región segura corresponde a los puntos que quedan \textbf{por debajo} de la curva \(\Delta v = \sqrt{2 a D}\) en el plano \((D, \Delta v)\).
+\end{solutionbox}
+
 \item Sabiendo que \((\Delta v_1, D_1)\) es seguro, analiza si el par \((2\Delta v_1, 2D_1)\) es necesariamente seguro, necesariamente peligroso o depende del caso.
+
+\begin{solutionbox}
+la condición de seguridad \((\Delta v)^2 < 2 a D\) aplicada a \((\Delta v_1, D_1)\) da \((\Delta v_1)^2 < 2 a D_1\). Para el par \((2\Delta v_1, 2 D_1)\) la desigualdad se transforma en \(4 (\Delta v_1)^2 < 4 a D_1\), equivalente a \((\Delta v_1)^2 < a D_1\), que es \textit{más exigente} que la condición original. Por tanto, no es cierto en general que \((2\Delta v_1, 2 D_1)\) sea seguro: depende de cuán lejos del borde estaba el punto original.
+\end{solutionbox}
+
 \end{enumerate}
 
 %--------------------------------------------------
@@ -489,14 +521,31 @@ Este capítulo recoge los ítems propuestos para las mini–evaluaciones. Cada c
 \begin{enumerate}
 \item Para \(v_0 = 20\,\text{m/s}\), calcula \(\alpha = g / v_0^2\). Luego decide si el punto \(P_1 = (6\,\text{m}, 9\,\text{m})\) es alcanzable comparando con la parábola de seguridad.
 
+\begin{solutionbox}
+se calcula \(\alpha = g / v_0^2 \approx 9{,}8/400 = 0{,}0245\,\text{m}^{-1}\). La parábola de seguridad viene dada por \(y_{\text{seg}}(x) = \frac{1-(\alpha x)^2}{2 \alpha}\). Evaluando en \(x=6\), se obtiene \(y_{\text{seg}}(6) \approx 19{,}97\,\text{m}\). Como \(9 < 19{,}97\), el punto es alcanzable.
+\end{solutionbox}
+
 \item Para \(v_0 = 20\,\text{m/s}\):  
 (a) Decide si el punto \(P_2 = (4\,\text{m}, 10\,\text{m})\) es alcanzable.  
 (b) Repite para \(P_3 = (10\,\text{m}, 5\,\text{m})\).  
 (c) Indica cuál está más cerca del límite de lo alcanzable.
 
+\begin{solutionbox}
+para cada punto \(P_2, P_3\) se evalúa \(y_{\text{seg}}(x)\) en la abscisa correspondiente y se compara la ordinada del punto con el valor de la parábola de seguridad. Un punto está “en el límite” cuando su altura es muy próxima a \(y_{\text{seg}}(x)\); si la altura es claramente menor, está bien dentro de la región alcanzable.
+\end{solutionbox}
+
 \item Escribe \(\alpha = g / v_0^2\). Si reemplazas \(v_0\) por \(2v_0\), expresa \(\alpha_{\text{nuevo}}\) en términos de \(\alpha\) y discute cómo cambia la región alcanzable.
 
+\begin{solutionbox}
+al reemplazar \(v_0\) por \(2 v_0\) se tiene \(\alpha_{\text{nuevo}} = g / (2 v_0)^2 = g / (4 v_0^2) = \alpha / 4\). Como la altura máxima de la parábola es proporcional a \(1/\alpha\), al disminuir \(\alpha\) a la cuarta parte, la región alcanzable se hace cuatro veces “más alta” y, en general, más amplia.
+\end{solutionbox}
+
 \item Explica por qué, cuando un punto \((x,y)\) es alcanzable, suelen existir dos soluciones de ángulo: un ángulo bajo y un ángulo alto.
+
+\begin{solutionbox}
+la ecuación de la trayectoria para un proyectil permite, para un mismo punto alcanzable, dos soluciones de ángulo \(\theta\): una con \(\theta\) pequeño (arco bajo) y otra con \(\theta\) grande (arco alto). Esto se ve al resolver en \(\theta\) la ecuación \(y = x \tan\theta - \tfrac{g}{2 v_0^2 \cos^2\theta} x^2\), que lleva a una ecuación cuadrática en \(\tan\theta\) con dos raíces reales cuando el punto está debajo de la parábola de seguridad.
+\end{solutionbox}
+
 \end{enumerate}
 
 %--------------------------------------------------
@@ -508,18 +557,43 @@ Este capítulo recoge los ítems propuestos para las mini–evaluaciones. Cada c
 \(y_f(x_c) = x_c \tan\theta - \frac{g}{2v_0^2 \cos^2\theta} x_c^2\),  
 calcula la altura al pasar por \(x = x_c\).
 
+\begin{solutionbox}
+se reemplaza el valor de \(x_c\) en la expresión dada para obtener \(y_f(x_c)\) en función de \(v_0\) y \(\theta\); si se dan valores numéricos de \(v_0\) y \(\theta\), se calcula directamente la altura correspondiente en ese punto.
+\end{solutionbox}
+
 \item Dados dos anillos con centros \((x_{c1}, y_{c1})\), \((x_{c2}, y_{c2})\) y radios \(R_1, R_2\), evalúa para un disparo \((v_0,\theta)\) si pasa por ambos verificando:  
 \(-R_i < y_f(x_{ci}) - y_{ci} < R_i\).
 
+\begin{solutionbox}
+primero se calculan \(y_f(x_{c1})\) y \(y_f(x_{c2})\) usando la fórmula del ítem anterior. Luego se verifican las dos inecuaciones \(-R_1 < y_f(x_{c1}) - y_{c1} < R_1\) y \(-R_2 < y_f(x_{c2}) - y_{c2} < R_2\). Si ambas se cumplen, el disparo pasa por los dos anillos; si una falla, no pasa por ese anillo.
+\end{solutionbox}
+
 \item Da dos modificaciones en los anillos que siempre reducen el espacio de soluciones \((\theta, v_0)\). Explica por qué.
+
+\begin{solutionbox}
+ejemplos típicos son: (i) disminuir el radio de uno o ambos anillos, lo que estrecha el intervalo \(y_c - R < y_f < y_c + R\) y reduce el conjunto de \((\theta, v_0)\) que lo satisfacen; (ii) aumentar la distancia entre los centros de los anillos, de modo que la trayectoria deba ajustar dos condiciones más separadas, lo que también reduce el espacio de soluciones.
+\end{solutionbox}
 
 \item El tiempo total de vuelo es \(T = \frac{2 v_0 \sin\theta}{g}\). Explica por qué la componente vertical \(v_0 \sin\theta\) es la que más afecta el tiempo de vuelo, y cuál de las dos soluciones (arco alto o bajo) tendrá mayor tiempo de vuelo.
 
+\begin{solutionbox}
+se observa que \(T\) depende linealmente de \(v_0 \sin\theta\), es decir, del componente vertical de la velocidad inicial. Para un mismo \(v_0\), el arco alto tiene \(\sin\theta\) mayor que el arco bajo, por lo que su tiempo de vuelo es mayor. En consecuencia, la trayectoria de arco alto es más “alta y lenta” que la de arco bajo.
+\end{solutionbox}
+
 \item Explica por qué la solución de arco alto tiende a facilitar el paso por dos anillos consecutivos, relacionándolo con el tiempo de vuelo y la altura máxima.
+
+\begin{solutionbox}
+el arco alto tiene un tiempo de vuelo mayor y alcanza alturas más elevadas, lo que facilita satisfacer simultáneamente dos condiciones de paso (dos anillos) ubicadas a distintas posiciones. La trayectoria permanece más tiempo en el aire, permitiendo ajustar mejor la altura en ambos puntos \(x_{c1}\) y \(x_{c2}\).
+\end{solutionbox}
 
 \item Considera el caso en que los dos anillos tienen el mismo centro y radio. Muestra cómo se reduce el sistema  
 \(-R_i < y_f(x_{ci}) - y_{ci} < R_i\)  
 y por qué no cambia la región de soluciones respecto al caso de un solo anillo.
+
+\begin{solutionbox}
+al tener \((x_{c1}, y_{c1}, R_1) = (x_{c2}, y_{c2}, R_2)\), las dos condiciones \(-R_1 < y_f(x_{c1}) - y_{c1} < R_1\) y \(-R_2 < y_f(x_{c2}) - y_{c2} < R_2\) se reducen a una sola inecuación. Por tanto, el conjunto de soluciones \((\theta, v_0)\) es exactamente el mismo que en el caso de un solo anillo en esa posición.
+\end{solutionbox}
+
 \end{enumerate}
 
 %--------------------------------------------------
@@ -527,11 +601,24 @@ y por qué no cambia la región de soluciones respecto al caso de un solo anillo
 %--------------------------------------------------
 
 \begin{enumerate}
+
 \item Usando que el movimiento es horizontal con rapidez constante, escribe la ecuación \(x(t) = v_0 t\) y deduce el tiempo en que la bola alcanza el borde horizontal del escalón \(n\), ubicado en \(x_n = n w\).
+
+\begin{solutionbox}
+se usa \(x(t) = v_0 t\) y se iguala a \(x_n = n w\), de modo que \(v_0 t_n = n w\). Por tanto, el tiempo en que la bola llega al escalón \(n\) es \(t_n = x_n / v_0 = n w / v_0\).
+\end{solutionbox}
 
 \item Usando la ecuación vertical \(y(t) = -\tfrac12 g t^2\) y la expresión del tiempo obtenida en el ítem anterior, escribe la altura \(y_n\) de la bola al llegar a la posición \(x_n = n w\).
 
+\begin{solutionbox}
+se reemplaza \(t_n = n w / v_0\) en \(y(t) = -\tfrac12 g t^2\), obteniendo \(y_n = -\tfrac12 g (n w / v_0)^2\). Esta es la altura (negativa) de la bola al llegar a la posición \(x_n\).
+\end{solutionbox}
+
 \item Explica la condición que debe cumplir \(y_n\) para que la bola impacte el escalón \(n\) y no el escalón anterior. Es decir, expresa una condición del tipo “la bola llega entre la parte superior del escalón \(n\) y la parte superior del escalón \(n-1\)”.
+
+\begin{solutionbox}
+si los escalones tienen altura \(h\), la parte superior del escalón \(n\) está a \(y = -n h\) y la del escalón anterior a \(y = -(n-1)h\). La condición típica de impacto es que \(y_n\) quede entre ambos niveles, por ejemplo \(-n h \le y_n < -(n-1)h\), o una desigualdad equivalente según la convención usada en la guía.
+\end{solutionbox}
 
 \item Recordando que, en el desarrollo de la guía, se obtuvo que el número de escalón de impacto viene dado por
 \[
@@ -539,13 +626,23 @@ y por qué no cambia la región de soluciones respecto al caso de un solo anillo
 \]
  discute qué ocurre con \(n\) si se reemplaza \(v_0\) por \(2 v_0\), manteniendo fijos \(h, g\) y \(w\).
 
+\begin{solutionbox}
+la expresión \(n = \left\lceil 2 h v_0^2 / (g w^2) \right\rceil\) muestra que \(n\) crece proporcionalmente a \(v_0^2\). Si se reemplaza \(v_0\) por \(2 v_0\), el factor \(v_0^2\) se multiplica por 4 y, en consecuencia, el valor dentro del techo se multiplica aproximadamente por 4. Esto significa que el escalón de impacto se desplaza a valores de \(n\) mucho mayores (aproximadamente cuatro veces más adelante, salvo ajustes por el techo).
+\end{solutionbox}
+
 \item Usando la expresión
 \[
   n = \left\lceil \frac{2 h v_0^2}{g w^2} \right\rceil,
 \]
- discute el efecto de aumentar \(w\) o de aumentar \(h\) (manteniendo \(v_0\) fijo) sobre el número de escalón de impacto. ¿Qué cambio produce cada modificación sobre \(n\)?
+discute el efecto de aumentar \(w\) o de aumentar \(h\) (manteniendo \(v_0\) fijo) sobre el número de escalón de impacto. ¿Qué cambio produce cada modificación sobre \(n\)?
+
+\begin{solutionbox}
+en \(n = \left\lceil 2 h v_0^2 / (g w^2) \right\rceil\), si \(w\) aumenta, el denominador \(w^2\) crece y el cociente disminuye, por lo que \(n\) tiende a disminuir (la bola golpea un escalón más cercano). Si \(h\) aumenta, el numerador crece y el cociente aumenta, por lo que \(n\) tiende a aumentar (la bola impacta un escalón más lejano).
+\end{solutionbox}
+
 \end{enumerate}
 
+%--------------------------------------------------
 %--------------------------------------------------
 \section{Sólido de Revolución 1 — Cono}
 %--------------------------------------------------
@@ -556,18 +653,43 @@ y por qué no cambia la región de soluciones respecto al caso de un solo anillo
   r(h) = h \tan\theta.
 \]
 
+\begin{solutionbox}
+al considerar el triángulo rectángulo formado por la altura \(h\) y el radio \(r\), se tiene \(\tan\theta = r/h\). Despejando, se obtiene \(r(h) = h \tan\theta\).
+\end{solutionbox}
+
 \item Considera una masa que describe un movimiento circular uniforme de radio \(r\) en el interior del cono. A partir de las proyecciones de fuerzas (peso y normal), muestra que la condición de giro estable viene dada por
 \[
   \frac{v^2}{r} = g \tan\theta.
 \]
 
+\begin{solutionbox}
+se descompone la fuerza normal \(N\) en componentes: \(N \cos\theta = mg\) (equilibrio vertical) y \(N \sin\theta = m v^2 / r\) (centrípeta). Dividiendo la segunda por la primera se obtiene \(\tan\theta = v^2 / (r g)\), es decir, \(v^2 / r = g \tan\theta\).
+\end{solutionbox}
+
 \item Usando las expresiones anteriores, reemplaza \(r(h) = h \tan\theta\) en la condición de giro estable y obtiene una expresión explícita para \(v(h)\).
+
+\begin{solutionbox}
+sustituyendo \(r = h \tan\theta\) en \(v^2 / r = g \tan\theta\) se obtiene \(v^2 = g r \tan\theta = g (h \tan\theta) \tan\theta = g h \tan^2\theta\). Por tanto, \(v(h) = \tan\theta\, \sqrt{g h}.\)
+\end{solutionbox}
 
 \item Compara las velocidades de giro \(v(h_1)\) y \(v(h_2)\) para dos alturas tales que \(0 < h_1 < h_2\). ¿Qué implicancia tiene esto sobre cómo cambia la velocidad requerida para un giro estable al aumentar la altura en el cono?
 
+\begin{solutionbox}
+como \(v(h) = \tan\theta \sqrt{g h}\), para un mismo \(\theta\) la velocidad crece con \(\sqrt{h}\). Si \(0 < h_1 < h_2\), entonces \(v(h_1) < v(h_2)\): a mayor altura en el cono, mayor velocidad de giro requerida.
+\end{solutionbox}
+
 \item Considera ahora dos conos con ángulos \(\theta_1 < \theta_2\). Para una misma altura \(h\), usa la expresión de \(v(h)\) para decidir en cuál de los dos conos se requiere una mayor velocidad de giro para mantener la órbita estable.
 
+\begin{solutionbox}
+para una altura fija \(h\), se tiene \(v(h) = \tan\theta \sqrt{g h}\). Si \(\theta_1 < \theta_2\), entonces \(\tan\theta_1 < \tan\theta_2\), por lo que \(v_1(h) < v_2(h)\). El cono más abierto (mayor \(\theta\)) requiere una velocidad de giro mayor para mantener la órbita estable.
+\end{solutionbox}
+
 \item Analiza el límite de la expresión \(v(h) = \tan\theta \, \sqrt{g h}\) cuando \(\theta \to 0\). ¿Qué ocurre con la velocidad de giro estable en ese límite y qué interpretación física tiene este resultado?
+
+\begin{solutionbox}
+en \(v(h) = \tan\theta \, \sqrt{g h}\), al tomar el límite \(\theta \to 0\) se tiene \(\tan\theta \to 0\) y, por tanto, \(v(h) \to 0\). Esto indica que, en el límite de un cono muy angosto (\(\theta\) casi cero), no es posible mantener un giro estable con velocidad finita: la partícula tendería a deslizarse hacia el vértice.
+\end{solutionbox}
+
 \end{enumerate}
 
 %--------------------------------------------------
@@ -581,6 +703,10 @@ y por qué no cambia la región de soluciones respecto al caso de un solo anillo
 \]
 Interpreta geométricamente esta relación en términos de la pendiente de la curva meridiana \(r(h)\).
 
+\begin{solutionbox}
+en el corte meridiano, la superficie se describe por la curva \(r(h)\). La pendiente de esta curva respecto de la horizontal es \(dr/dh\), que geométricamente corresponde a \(\tan\varphi\). El valor absoluto aparece porque sólo interesa el ángulo con la horizontal, no si la pendiente es positiva o negativa.
+\end{solutionbox}
+
 \item Usando las expresiones generales
 \[
   \frac{v^2}{r} = g \tan\varphi, \qquad \tan\varphi = \left|\frac{dr}{dh}\right|,
@@ -590,6 +716,10 @@ Interpreta geométricamente esta relación en términos de la pendiente de la cu
   v^2(h) = g\, r(h) \, \left|\frac{dr}{dh}\right|.
 \]
 
+\begin{solutionbox}
+a partir de \(v^2 / r = g \tan\varphi\) y \(\tan\varphi = |dr/dh|\), se sustituye en la primera ecuación para obtener \(v^2 / r = g |dr/dh|\). Multiplicando ambos lados por \(r\) se llega a \(v^2(h) = g\, r(h)\, |dr/dh|\).
+\end{solutionbox}
+
 \item Considera ahora dos superficies de revolución:
 \begin{itemize}
   \item Superficie A (cono): \(r(h) = k h\);
@@ -597,13 +727,26 @@ Interpreta geométricamente esta relación en términos de la pendiente de la cu
 \end{itemize}
 con \(k>0\). Calcula \(v(h)\) en cada caso usando la expresión general del ítem anterior y compara cómo crece la velocidad de giro requerida con la altura en ambas superficies.
 
+\begin{solutionbox}
+para el cono \(r(h) = k h\), se tiene \(dr/dh = k\) y, por tanto, \(v^2(h) = g (k h) k = g k^2 h\), de donde \(v(h) \propto h^{1/2}\). Para la superficie cuadrática \(r(h) = k h^2\), se tiene \(dr/dh = 2 k h\) y \(v^2(h) = g (k h^2) (2 k h) = 2 g k^2 h^3\), de modo que \(v(h) \propto h^{3/2}\). Así, en la superficie cuadrática la velocidad crece mucho más rápido con la altura que en el cono.
+\end{solutionbox}
+
 \item Discute, en términos de la fórmula general \(v^2(h) = g\, r(h)\, \left|dr/dh\right|\), por qué en superficies donde \(r(h)\) y \(\left|dr/dh\right|\) crecen rápidamente con la altura, la velocidad requerida para el giro estable aumenta de manera marcada al subir en la superficie.
+
+\begin{solutionbox}
+la expresión \(v^2(h) = g\, r(h)\, |dr/dh|\) muestra que, si tanto \(r(h)\) como \(|dr/dh|\) aumentan fuertemente con \(h\), su producto crece y, en consecuencia, también lo hace \(v^2(h)\). Esto implica que la velocidad requerida para mantener el giro estable se vuelve mucho mayor al subir en la superficie.
+\end{solutionbox}
 
 \item Considera la superficie de revolución paraboloidal definida por
 \[
   r(h) = k \sqrt{h},
 \]
 con \(k>0\). Calcula \(\frac{dr}{dh}\) y luego usa la fórmula general \(v^2(h) = g\, r(h)\, \left|dr/dh\right|\) para mostrar que la velocidad de giro estable \(v(h)\) no depende de la altura. Explica por qué, en este sentido, esta superficie puede considerarse aproximadamente isócrona.
+
+\begin{solutionbox}
+para \(r(h) = k \sqrt{h}\) se tiene \(dr/dh = k / (2 \sqrt{h})\). Entonces \(v^2(h) = g (k \sqrt{h}) (k / (2 \sqrt{h})) = g k^2/2\), que es constante. Por tanto, \(v(h)\) no depende de \(h\) y la superficie se comporta como isócrona: a distintas alturas se requiere prácticamente la misma velocidad de giro.
+\end{solutionbox}
+
 \end{enumerate}
 
 % End of inserted chapter
