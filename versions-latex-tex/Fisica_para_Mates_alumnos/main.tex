@@ -14,6 +14,11 @@
 \usepackage{booktabs} % Para líneas más estéticas en la tabla
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}{}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-50pt}{20pt}
+
 % Compilar con: lualatex --shell-escape o xelatex --shell-escape
 \usepackage{listings}
 \usepackage{xcolor}
@@ -46,11 +51,12 @@
 
 \begin{document}
 
+\begin{center}
+    \Huge \textbf{Física para Mates}
+\end{center}
+\vspace{1.5cm}
 
-
-\newpage
-
-\chapter{Cinemática 1: Frenada de Emergencia}
+{\let\clearpage\relax \chapter{Cinemática 1: Frenada de Emergencia}}
 
 Este problema analiza la cinemática de una frenada para evitar una colisión. Hay dos autos, auto A y auto B, moviéndose en la misma dirección, de forma  paralela. El auto A viene más rápido que el auto B, y de pronto se da cuenta que tiene que comenzar a frenar para evitar un accidente. El auto A comienza a frenar cuando están a una distancia \(D\) el uno del otro, con una aceleración constante \(-a <0\).  
 
@@ -75,8 +81,6 @@ Este problema analiza la cinemática de una frenada para evitar una colisión. H
     
     \vspace{0.5cm}
 \end{enumerate}
-
-\newpage
 
 \vspace{0.5cm}
 \textbf{Preámbulo}
