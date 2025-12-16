@@ -55,7 +55,7 @@
 \geometry{margin=1in}
 
 \title{\textbf{Física para Mates \\
-Implementación piloto}}
+Implementación Piloto}}
 \author{Aníbal Olivera M.}
 \date{Noviembre 2025}
 
@@ -73,13 +73,11 @@ Implementación piloto}}
 
 \section{Contexto}
 
-La presente propuesta describe una implementación piloto factible del proyecto \textit{Física para Mates} en los cursos de Geometría y Taller de Física I del Plan Común de Ingeniería UDD.
-
-La implementación:
+La presente propuesta describe una implementación piloto factible del proyecto \textit{Física para Mates} en los cursos de Geometría y Taller de Física I de la carrera Ingeniería Civil Plan Común de la Facultad de Ingeniería de la Universidad del Desarrollo. La presente implementación:
 
 \begin{itemize}
 \item utiliza problemas ya diseñados y acompañados de simulaciones computacionales;
-\item se integra a la estructura de evaluación existente sin modificar las ponderaciones globales;
+\item se integra a la estructura de evaluación existente sin modificar sus ponderaciones;
 \item incorpora mediciones pre–post de motivación y estrategias de aprendizaje;
 \item requiere infraestructura ya disponible en la universidad (salas de computación) y un esfuerzo acotado de coordinación entre las cátedras de Matemática y Física.
 \end{itemize}
@@ -88,25 +86,25 @@ Este documento está pensado para ser leído por académicos y autoridades que n
 
 En una primera etapa, el proyecto se ha concretado en el diseño de una serie de problemas aplicados acompañados de simulaciones computacionales interactivas. Estos problemas ya se encuentran detallados en el documento \textit{Física\_para\_Mates\_AO\_v2.pdf}, y tienen en común 1) hacer uso de conceptos de Física mínimos —cinemática y ecuación de la trayectoria— y 2) ser no triviales en su desarrollo, enfatizando el rol de las simulaciones como 'bombas de intuición'.
 
-En este informe se propone una implementación piloto de dichos problemas en dos asignaturas del Plan Común: \textbf{Geometría} (bimestre 2, con clases diarias de 70 minutos) y \textbf{Taller de Física I} (semestre 2, con 3 clases semanales de 70 minutos más una ayudantía).
+En este informe se propone una implementación piloto de dichos problemas en dos asignaturas del Plan Común: \textbf{Geometría} (bimestre 2, con clases diarias de 140 minutos) y \textbf{Taller de Física I} (semestre 2, con 3 clases semanales de 70 minutos más una ayudantía).
 
 Dependiendo de la evaluación de esta primera experiencia, el proyecto puede escalarse en cursos posteriores (por ejemplo, Introducción al Cálculo y Cálculo Diferencial), incorporando nuevos problemas y ampliando el uso de simulaciones en la formación básica de los estudiantes de Ingeniería.
 
 \section{Objetivos generales del proyecto}
 
 \begin{enumerate}
-  \item Conectar explícitamente contenidos de Matemática (Geometría, trigonometría, ecuaciones, funciones) con escenarios de problemas de Física estándar, aunque revisitados y visto desde nuevas ópticas.
+  \item Conectar explícitamente contenidos de Matemática (ecuaciones de segundo grado, funciones reales, geometría analítica, trigonometría) con escenarios de problemas de Física estándar, aunque revisitados y visto desde nuevas ópticas.
   \item Integrar \textbf{simulaciones computacionales} como herramienta de exploración (bombas de intuición), modelación y verificación de resultados matemáticos.
   \item Desarrollar habilidades de resolución de \textbf{problemas no triviales}, donde los estudiantes deban interpretar, modelar y analizar situaciones con parámetros múltiples.
   \item \textbf{Evaluar el impacto} de esta intervención en variables de motivación y estrategias de aprendizaje mediante un cuestionario estandarizado aplicado en modalidad pre--post.
 \end{enumerate}
 
-\section{Objetivos específicos de la implementación piloto}
+\section{Objetivos específicos del proyecto}
 
 \begin{itemize}
-  \item Implementar un conjunto acotado de sesiones de trabajo en grupos de tres estudiantes, utilizando simulaciones computacionales en salas de computadores de la universidad.
+  \item Diseñar e implementar un conjunto acotado de sesiones de trabajo en grupos de tres estudiantes, utilizando simulaciones computacionales en salas de computadores de la universidad.
   \item Integrar estas sesiones dentro de la estructura de evaluación de los cursos de Geometría y Taller de Física I, sin alterar sus ponderaciones globales.
-  \item Recoger datos de desempeño (productos escritos, mini--evaluaciones) y datos de percepción y motivación mediante un cuestionario tipo MSLQ adaptado a estudiantes de ingeniería de primer año.
+  \item Recoger datos de desempeño (productos escritos, mini--evaluaciones) y datos de percepción y motivación mediante un cuestionario tipo \textbf{MSLQ} (Motivated Strategies for Learning Questionnaire) adaptado a estudiantes de ingeniería de primer año.
 \end{itemize}
 
 \section{Resumen de problemas disponibles}
@@ -125,7 +123,7 @@ Dependiendo de la evaluación de esta primera experiencia, el proyecto puede esc
 \rockbottomtiny{Trigonometría} &
 \rockbottomtiny{Vectores} &
 \rockbottomtiny{Geom. Analítica} &
-\rockbottomtiny{Logaritmos} &
+\rockbottomtiny{Ecuac. de segundo gr.} &
 \rockbottomtiny{Cálc. Diferen.} &
 \rockbottomtiny{Cinemática} &
 \rockbottomtiny{Leyes Newton} &
@@ -135,7 +133,7 @@ Dependiendo de la evaluación de esta primera experiencia, el proyecto puede esc
 \rockbottomsupertiny{Simul. 3D} &
 \rockbottomshort{Sugerida} \\
 \midrule
-Cinemática 1 (4.1)   &   &   & X &   &   & X &   &   &   & X & X & 1 \\
+Cinemática 1 (4.1)   &   &   &   & X &   & X &   &   &   & X & X & 1 \\
 Balística 1 (4.2)    & X & X & X &   &   & X &   &   &   & X & X & 1 \\
 Balística 2 (4.3)    & X & X & X &   &   & X &   &   &   & X & X & 1 \\
 Balística 3 (4.4)    &   & X & X &   &   & X &   &   &   & X & X & 1 \\
@@ -166,12 +164,12 @@ En este documento nos centraremos en los problemas 4.1--4.5 y 5.1, articulados e
 \subsection*{Geometría}
 
 \begin{itemize}
-  \item Curso del de primer año, entre mediados de Mayo y principio de Julio.
-  \item Clases de 70 minutos, de lunes a viernes, durante 10 semanas.
+  \item Curso del de primer año, bimestral, entre mediados de mayo y principio de julio.
+  \item Clases de 140 minutos, de lunes a viernes, durante 8 semanas.
   \item Para esta propuesta se utilizarán sesiones de 140 minutos, agendadas en las \textbf{últimas semanas} del bimestre.
 \end{itemize}
 
-\subsection*{Taller de Física I}
+\subsection*{Taller de Física I (por confirmar*)}
 
 \begin{itemize}
   \item Curso de primer año, articulado con Introducción al Cálculo.
@@ -192,7 +190,7 @@ Definiremos como sesiones de \textbf{140 minutos obligatorias}:
 \section{Esquema versiones de implementación}
 %–––––––––––––––––––––––––––––––––––
 
-Se proponen dos versiones de implementación, con distinta intensidad, que utilizan la misma infraestructura y estructura de sesión. Esto es un esquema de ambas versiones —versión mínima y versión completa.
+Con el propósito de aumentar la cartera de posibilidades para ejecutar el presente proyecto, se proponen dos versiones de implementación con distinta intensidad, ambas utilizando la misma infraestructura y estructura básica de sesión. Esto es un esquema de ambas versiones —versión mínima y versión completa.
 
 \subsection{Versión mínima (4 sesiones)}
 
@@ -311,7 +309,7 @@ Esta mini–evaluación se corrige individualmente y forma parte de la nota de l
 
 \section{Distribución de tiempos}
 
-En términos de minutos, una sesión tipo se puede esquematizar como:
+En términos de minutos, una sesión tipo puede ser esquematizada siguendo esta distribución de tiempos:
 
 \begin{center}
 \begin{tabular}{@{}lc@{}}
@@ -328,6 +326,9 @@ Mini–evaluación individual & 15–20 min \\
 \bottomrule
 \end{tabular}
 \end{center}
+\vspace{0.35cm}
+
+El profesor a cargo debe cronometrar cada etapa y ser riguroso con los minutos asignados, toda sesión debe terminar con la entrega de la mini-evaluación individual.
 
 %======================================================================
 \chapter{Evaluación y articulación con la nota de curso}
@@ -335,7 +336,7 @@ Mini–evaluación individual & 15–20 min \\
 
 \section{Productos evaluados en cada sesión}
 
-Cada sesión Gk o Fk genera dos productos evaluados:
+Cada sesión Gk o Fk genera dos productos evaluados (pueden ver la hoja de ejercicios que verán los alumnos en en archivo \texttt{Fisica\_para\_Mates\_AO\_v2-alumnos.pdf}, además de ver el banco de ejercicios para la mini-evaluación en la sección \ref{Banco de Ítems}):
 
 \begin{enumerate}
 \item \textbf{Hoja de desarrollo grupal (50\% de la sesión)} 
@@ -347,7 +348,7 @@ Cada sesión Gk o Fk genera dos productos evaluados:
 
 \item \textbf{Mini–evaluación individual (50\% de la sesión)}
 \begin{itemize}
-\item $\sim$5 ítems cortos relacionados a los ejercicios de la sesión.
+\item Aproximadamente 5 ítems cortos relacionados a los ejercicios de la sesión.
 \item Garantiza responsabilidad individual dentro del trabajo grupal.
 \end{itemize}
 \end{enumerate}
@@ -374,7 +375,7 @@ Examen & 30\% \\
 \end{tabular}
 \end{center}
 
-En esta propuesta, la nota de \textbf{Tareas (10\%)} se reemplaza por el promedio de las notas de sesiones G\_k. No se modifica la ponderación global del curso, sólo se redefine el contenido de la categoría ``Tareas’’.
+En esta propuesta, la nota de \textbf{Tareas (10\%)} se reemplaza por el promedio de las notas de sesiones Gk. No se modifica la ponderación global del curso, sólo se redefine el contenido de la categoría ``Tareas’’.
 
 \section{Integración en Taller de Física I}
 
@@ -396,10 +397,10 @@ Examen & 30\% \\
 \end{tabular}
 \end{center}
 
-En esta propuesta, el proyecto \textit{Física para Mates} se integra dentro de la categoría \textbf{Laboratorios (15\%)}, donde cada sesión F\_k reemplaza 5 puntos de esa categoría. En este sentido, la sección Laboratorio estaría compuesto por:
+En esta propuesta, el proyecto \textit{Física para Mates} se integra dentro de la categoría \textbf{Laboratorios (15\%)}, donde cada sesión Fk reemplaza 5 puntos de esa categoría. En este sentido, la sección Laboratorio estaría compuesto por:
 \begin{itemize}
-    \item F\_1 (5\%) y Laboratorio usual (10\&).
-    \item F\_1-F\_2-F\_3 (15\%) y Laboratorio usual (0\&).
+    \item F1 (5\%) y Laboratorio usual (10\%).
+    \item F1-F2-F3 (15\%) y Laboratorio usual (0\%).
 \end{itemize}
 
 %======================================================================
@@ -408,7 +409,7 @@ En esta propuesta, el proyecto \textit{Física para Mates} se integra dentro de 
 
 \section{Instrumento}
 
-Para medir el impacto de la intervención en variables de motivación y estrategias de aprendizaje, se utilizará una versión adaptada del cuestionario \textbf{MSLQ} (Motivated Strategies for Learning Questionnaire), validado en estudiantes universitarios chilenos de primer año.
+Para medir el impacto de la intervención en variables de motivación y estrategias de aprendizaje, se utilizará una versión adaptada del cuestionario \textbf{MSLQ}, validado en estudiantes universitarios chilenos de primer año.
 
 Este cuestionario evalúa dimensiones como:
 
@@ -434,14 +435,16 @@ En su versión completa, el instrumento contiene alrededor de 80 ítems tipo Lik
 \subsection*{Versión mínima}
 
 \begin{itemize}
-\item \textbf{Pre–test}: al inicio de la sesión G1 (primeros 15–20 minutos).
+\item \textbf{Pre–test}: al inicio de la sesión G1 (primeros 15–20 minutos), o durante la clase anterior.
+\item \textbf{Consentimiento}: al inicio de la sesión G1, se les presentará consentimiento informado dando a conocer los alcances de la actividad (primeros 15–20 minutos).
 \item \textbf{Post–test}: al final de la sesión F1 (últimos 15–20 minutos).
 \end{itemize}
 
 \subsection*{Versión completa}
 
 \begin{itemize}
-\item \textbf{Pre–test}: al inicio de la sesión G1.
+\item \textbf{Pre–test}: al inicio de la sesión G1 (primeros 15–20 minutos), o durante la clase anterior.
+\item \textbf{Consentimiento}: al inicio de la sesión G1, se les presentará consentimiento informado dando a conocer los alcances de la actividad (primeros 15–20 minutos).
 \item \textbf{Post–test}: durante la sesión F3 (parte inicial o final), en conjunto con la mini–evaluación integradora.
 \end{itemize}
 
@@ -462,15 +465,16 @@ Los resultados del cuestionario no afectan la nota de los estudiantes en ningún
 \item \textbf{Software}: navegador web actualizado; no se requiere instalación de software adicional en los equipos de los estudiantes dado que las simulaciones estarán sincronizadas en un Cloud de Computación.
 \item \textbf{Materiales impresos}: guías de actividades y hojas de desarrollo por sesión; copias del cuestionario pre–post.
 \item \textbf{Profesor del curso}: responsable de la conducción de la sesión, explicación de objetivos y discusión final.
-\item Los estudiantes trabajarán en \textbf{grupos de tres}.
+\item Los estudiantes trabajarán en \textbf{grupos de tres} (o máximo cuatro, en caso que el número de alumnos no sea un múltiplo de tres).
 \item Cada grupo tendrá asignado un computador durante la sesión.
-\item Las sesiones Gk y Fk serán anunciadas como \textbf{actividades obligatorias} y parte integrante de la evaluación de Tareas/Laboratorios del curso.
+\item Se espera que las sesiones Gk y Fk serean anunciadas como \textbf{actividades obligatorias} y parte integrante de la evaluación de Tareas/Laboratorios del curso.
 \end{itemize}
 
 \vspace{1cm}
 
 %======================================================================
-\chapter{Banco de Ítems para Mini–Evaluaciones}
+\chapter{Banco de Ítems para Mini–Evaluaciones} 
+\label{Banco de Ítems}
 %======================================================================
 
 Este capítulo recoge los ítems propuestos para las mini–evaluaciones. Cada conjunto de ítems puede ser utilizado de manera flexible según necesidad de la sesión correspondiente.
